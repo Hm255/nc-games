@@ -12,7 +12,6 @@ import { getReviews } from "../api";
         getReviews()
         .then((data) => {
             setReviews(data.reviews);
-            console.log(data.reviews);
             setLoading(false);
         })
     }, []);
@@ -20,11 +19,12 @@ import { getReviews } from "../api";
 //set loading to false at the end of all useEffects, then add functionality in between setLoadings.
 return <ul>{reviews.map((review) => {
  
-return <li class="reviews"> <p class="title">Title:</p>{review.title}
+return <li class="reviews"> 
+<p class="title">Title:</p>{review.title}
 <br></br>
-                            <p class="category">Category:</p>{review.category}
+<p class="category">Category:</p>{review.category}
 <br></br>
-                            <p class="votes">Votes:</p>{review.votes}</li> 
+<p class="votes">Votes:</p>{review.votes}</li> 
   
 })}
 </ul>
