@@ -1,18 +1,19 @@
 import React from "react";
 import {useNavigate, Link} from "react-router-dom";
 
+
 export default function Navigation () {
 
     const navigate = useNavigate();
 
     const toReviews = (event) => {
         event.preventDefault();
-        navigate("/reviewList/");
+        navigate("/reviewList");
     };
-    const toCategories = (event) => {
-        event.preventDefault();
-        navigate("/Categories/");
-    };
+    // const toCategories = (event) => {
+    //     event.preventDefault();
+    //     navigate("/Categories/");
+    // };
 
 
     return (<div>
@@ -20,9 +21,9 @@ export default function Navigation () {
         <Link to="/reviewList">
         <button onClick={toReviews}>Reviews</button>
         </Link>
-        <Link to="/Categories">
+        {/* <Link to="/Categories">
         <button onClick={toCategories}>Categories</button>
-        </Link>
+        </Link> */}
     </div>
     )
 }

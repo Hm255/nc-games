@@ -3,8 +3,8 @@ import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import * as api from "./api"
 import Welcome from "./components/Welcome";
-import reviewList from "./components/reviewList";
-import Categories from "./components/Categories";
+import Reviewlist from "./components/Reviewlist";
+//import Categories from "./components/Categories";
 function App() {
   
   const [user, setUser] = useState('user');
@@ -20,9 +20,8 @@ function App() {
     <BrowserRouter>
     <div className="App">
           <Routes>
-            <Route path="/" element={<Welcome />} />
-            <Route path="/reviewList" element={<reviewList />} />
-            <Route path="/Categories" element={<Categories />} />
+            <Route path="/Welcome" element={<Welcome />} />
+            <Route path="/reviewList" element={<Reviewlist />} />
           </Routes>
     </div>
     </BrowserRouter>
