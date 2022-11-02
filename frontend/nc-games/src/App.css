@@ -58,3 +58,30 @@
   text-decoration: solid;
   color: chartreuse;
 }
+
+.categoryName{
+  font-size: 20px;
+  color: darkred;
+}
+
+.catName{
+  font-size: 24px;
+  color: darkolivegreen;
+}
+
+.categoryDesc{
+  font-size: 18px;
+  color: darkgoldenrod;
+}
+
+.catName{
+  font-size: 20px;
+  color: darkslateblue;
+}
+
+.categories{
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: mediumturquoise;
+  width: 25%;
+  margin: auto;
+}

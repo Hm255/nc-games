@@ -15,7 +15,10 @@ export default function Categories() {
   return (
     <ul>
       {categories.map((category) => {
-        return <Category key={category.category_name} category={category} />;
+        return <li className="categories" key={category['category']}> 
+        <p className="categoryName">Category:</p><p className="catName">{category['slug']}</p>
+        <p className="categoryDesc">description:</p><p className="catDesc">{category['description']}</p>
+        </li> ;
       })}
     </ul>
   );

@@ -11,10 +11,10 @@ export default function Navigation () {
         event.preventDefault();
         navigate("/reviewlist");
     };
-    // const toCategories = (event) => {
-    //     event.preventDefault();
-    //     navigate("/Categories/");
-    // };
+    const toCategories = (event) => {
+        event.preventDefault();
+        navigate("/Categories");
+    };
 
 
     return (<div>
@@ -22,9 +22,9 @@ export default function Navigation () {
         <Link to="/reviewlist">
         <button onClick={toReviews}>Reviews</button>
         </Link>
-        {/* <Link to="/Categories">
+        <Link to="/Categories">
         <button onClick={toCategories}>Categories</button>
-        </Link> */}
+        </Link>
     </div>
     )
 }
