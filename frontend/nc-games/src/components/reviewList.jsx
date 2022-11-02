@@ -8,7 +8,6 @@ import { getReviews } from "../api";
     //the useEffect is just data being loaded in/collected
     //always start a useEffect with something that shows the app is loading
     useEffect(()=>{ 
-        setLoading(true);
         getReviews()
         .then((data) => {
             setReviews(data.reviews);
@@ -18,13 +17,12 @@ import { getReviews } from "../api";
     if(loading) return <h2>loading...</h2>//loading message
 //set loading to false at the end of all useEffects, then add functionality in between setLoadings.
 return <ul>{reviews.map((review) => {
- 
-return <li class="reviews"> 
-<p class="title">Title:</p>{review.title}
+return <li className="reviews" key={review['review_id']}> 
+<p className="title">Title:</p>{review.title}
 <br></br>
-<p class="category">Category:</p>{review.category}
+<p className="category">Category:</p>{review.category}
 <br></br>
-<p class="votes">Votes:</p>{review.votes}</li> 
+<p className="votes">Votes:</p>{review.votes}</li> 
   
 })}
 </ul>
