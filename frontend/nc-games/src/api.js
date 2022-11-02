@@ -11,7 +11,7 @@ export const getReviews = () => {
 }
 
 export const getReview = (id) => {
-    return api.get(`/categories/${id}`).then((res) => {
+    return api.get(`/reviews/${id}`).then((res) => {
         return res.data;
      });
 }
