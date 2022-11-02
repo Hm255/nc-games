@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background-color: beige;
 }
 
 .App-logo {
@@ -35,4 +36,25 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.title{
+  font-size: 24px;
+  color: dodgerblue;
+}
+.category{
+  font-size: 24px;
+  color: red;
+}
+
+.reviews{
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: mediumturquoise;
+  width: 25%;
+  margin: auto;
+}
+.votes{
+  font-size: 24px;
+  text-decoration: solid;
+  color: chartreuse;
 }
