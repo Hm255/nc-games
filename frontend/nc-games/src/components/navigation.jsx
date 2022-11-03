@@ -17,7 +17,8 @@ export default function Navigation () {
     };
 
 
-    return (<div>
+    return (
+    <div>
         <h1>Welcome to NC games {name}</h1>
         <Link to="/reviewlist">
         <button onClick={toReviews}>Reviews</button>

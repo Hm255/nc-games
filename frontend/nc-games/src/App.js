@@ -13,6 +13,7 @@ function App() {
             <Route path="/" element={<Welcome />} />
             <Route path="/reviewlist" element={<Reviewlist />} />
             <Route path="/categories" element={<Categories />} />
+            <Route path="/reviewlist/:category" element={<Reviewlist />}/>
           </Routes>
     </div>
     </BrowserRouter>

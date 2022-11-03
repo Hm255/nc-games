@@ -71,7 +71,7 @@
 
 .categoryDesc{
   font-size: 18px;
-  color: darkgoldenrod;
+  color: rgb(59, 43, 3);
 }
 
 .catName{
@@ -85,3 +85,7 @@
   width: 25%;
   margin: auto;
 }
+
+/* .categoryButton{
+  background-color: green;
+} */
