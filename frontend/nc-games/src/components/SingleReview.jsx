@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getReview } from "../api";
 import { useParams } from "react-router-dom";
+//import comments from "./Commentlist"
 
 export default function SingleReview() {
     const {review_id} = useParams()
@@ -10,19 +11,10 @@ export default function SingleReview() {
     useEffect(()=>{ 
         getReview(review_id)
         .then((reviewFromApi) => {
-            
-            if(review_id === undefined){   
-                
-                setReview(<h1>where do you think you're going</h1>);
-                setLoading(false);
-            }
-            else{
-         <h1>you are in the right place</h1>
-            
             setReview(reviewFromApi); 
             setLoading(false);
 
-        }
+        
 })
     }, [review_id]);
 
@@ -40,7 +32,7 @@ export default function SingleReview() {
      <br></br>
      <p className="designer">Designer:</p>{review.designer}
      <br></br>
-     <p className="image">Image:</p><img src={review.review_img_url} className="img"></img>
+     <p className="image">Image:</p><img src={review.review_img_url} className="img" alt="img"></img>
      <br></br>
      <p className="revBody">Body:</p>{review.review_body}
      <br></br>
