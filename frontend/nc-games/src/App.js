@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Welcome from "./components/Welcome";
 import Reviewlist from "./components/Reviewlist";
 import Categories from "./components/Categories";
-import Review from "./components/Review";
+import SingleReview from "./components/SingleReview";
 function App() {
   
 
@@ -15,7 +15,7 @@ function App() {
             <Route path="/Reviewlist" element={<Reviewlist />} />
             <Route path="/Categories" element={<Categories />} />
             <Route path="/Reviewlist/:category" element={<Reviewlist />}/>
-            <Route path="/Reviewlist/:id" element={<Review />}/>
+            <Route path="/Reviewlist/review/:review_id" element={<SingleReview />}/>
           </Routes>
     </div>
     </BrowserRouter>

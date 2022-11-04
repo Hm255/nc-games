@@ -12,7 +12,7 @@ export const getReviews = () => {
 
 export const getReview = (id) => {
     return api.get(`/reviews/${id}`).then((res) => {
-        return res.data;
+        return res.data.review;
      });
 }
 
@@ -26,4 +26,10 @@ export const getCategory = (category) => {
     return api.get(`/categories/${category}`).then((res) => {
         return res.data;
      });
+}
+
+export const patchVotes = (id) => {
+    return api.patch(`/reviews/${id}`, {inc_votes: 1}).then((res) => {
+        return res.data
+    })
 }
