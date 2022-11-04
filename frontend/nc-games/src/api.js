@@ -30,6 +30,11 @@ export const getCategory = (category) => {
 
 export const patchVotes = (id) => {
     return api.patch(`/reviews/${id}`, {inc_votes: 1}).then((res) => {
-        return res.data
+        return res.data;
+    })
+}
+export const getCommentsPerReview = (id) => {
+    return api.get(`/reviews/${id}/comments`).then((res) => {
+        return res.data;
     })
 }
