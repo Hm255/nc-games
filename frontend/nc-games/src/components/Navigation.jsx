@@ -9,22 +9,23 @@ export default function Navigation () {
 
     const toReviews = (event) => {
         event.preventDefault();
-        navigate("/reviewlist");
+        navigate("/Reviewlist");
     };
-    // const toCategories = (event) => {
-    //     event.preventDefault();
-    //     navigate("/Categories/");
-    // };
+    const toCategories = (event) => {
+        event.preventDefault();
+        navigate("/Categories");
+    };
 
 
-    return (<div>
+    return (
+    <div>
         <h1>Welcome to NC games {name}</h1>
-        <Link to="/reviewlist">
-        <button onClick={toReviews}>Reviews</button>
+        <Link to="/Reviewlist">
+        <button handleClick={toReviews}>Reviews</button>
         </Link>
-        {/* <Link to="/Categories">
-        <button onClick={toCategories}>Categories</button>
-        </Link> */}
+        <Link to="/Categories">
+        <button handleClick={toCategories}>Categories</button>
+        </Link>
     </div>
     )
 }
