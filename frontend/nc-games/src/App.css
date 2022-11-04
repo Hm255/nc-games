@@ -86,6 +86,52 @@
   margin: auto;
 }
 
+.review{
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: mediumturquoise;
+  width: 25%;
+  margin: auto;
+}
+
+img{
+ max-width: 35%;
+ max-height: 35%;
+}
+
+.title{
+  font-size: 20px;
+  color: darkslateblue;
+}
+.owner{
+  font-size: 20px;
+  color: #065535;
+}
+.uploaded{
+  font-size: 20px;
+  color: #093380;
+}
+
+.image{
+  font-size: 20px;
+  color: #093244;
+}
+.designer{
+  font-size: 20px;
+  color: darkslateblue;
+}
+.category{
+  font-size: 20px;
+  color: #283452;
+}
+.votes{
+  font-size: 20px;
+  color: #900000;
+}
+.revBody{
+  font-size: 20px;
+  color: #623430;
+}
+
 /* .categoryButton{
   background-color: green;
 } */

@@ -37,9 +37,9 @@ import { useParams, Link } from "react-router-dom";
 //set loading to false at the end of all useEffects, then add functionality in between setLoadings.
 return <ul>{reviews.map((review) => {
 return <li className="reviews" key={review['review_id']}> 
-{/* <Link to={`/Reviewlist/${review.review_id}`}>
+<Link to={`/reviews/${review.review_id}`}>
        {review.review_id}
-       </Link> */}
+       </Link>
 <br></br>
 <p className="title">Title:</p>{review.title}
 <br></br>

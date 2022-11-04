@@ -12,7 +12,7 @@ export const getReviews = () => {
 
 export const getReview = (id) => {
     return api.get(`/reviews/${id}`).then((res) => {
-        return res.data;
+        return res.data.review;
      });
 }
 
