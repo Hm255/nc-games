@@ -23,7 +23,7 @@ export default function Categories() {
         return  <li className="categories" key={category['slug']}> 
         <p className="categoryName">Category:</p><p className="catName">{category['slug']}</p>
         
-       <Link to={`/reviewlist/${category.slug}`}>
+       <Link to={`/Reviewlist/${category.slug}`}>
        {category.slug}
        </Link>
 

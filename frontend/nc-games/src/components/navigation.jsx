@@ -9,7 +9,7 @@ export default function Navigation () {
 
     const toReviews = (event) => {
         event.preventDefault();
-        navigate("/reviewlist");
+        navigate("/Reviewlist");
     };
     const toCategories = (event) => {
         event.preventDefault();
@@ -20,11 +20,11 @@ export default function Navigation () {
     return (
     <div>
         <h1>Welcome to NC games {name}</h1>
-        <Link to="/reviewlist">
-        <button onClick={toReviews}>Reviews</button>
+        <Link to="/Reviewlist">
+        <button handleClick={toReviews}>Reviews</button>
         </Link>
         <Link to="/Categories">
-        <button onClick={toCategories}>Categories</button>
+        <button handleClick={toCategories}>Categories</button>
         </Link>
     </div>
     )
