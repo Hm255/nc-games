@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import { getReviews } from "../api";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
+
 
     const Reviewlist = ()=>{
     const [reviews, setReviews] = useState([]);
@@ -36,6 +37,10 @@ import { useParams } from "react-router-dom";
 //set loading to false at the end of all useEffects, then add functionality in between setLoadings.
 return <ul>{reviews.map((review) => {
 return <li className="reviews" key={review['review_id']}> 
+{/* <Link to={`/Reviewlist/${review.review_id}`}>
+       {review.review_id}
+       </Link> */}
+<br></br>
 <p className="title">Title:</p>{review.title}
 <br></br>
 <p className="category">Category:</p>{review.category}
