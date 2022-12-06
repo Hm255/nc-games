@@ -1,11 +1,11 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://backend-project-work.herokuapp.com/api", //source database url
+  baseURL: "https://nc-game.cyclic.app/api/", //source database url
 });
 
-export const getReviews = () => {
-    return api.get(`/reviews`).then((res) => {
+export const getReviews = (sortedBy, orderedBy, Category) => {
+    return api.get(`/reviews/?sortedBy=${sortedBy}&orderedBy=${orderedBy}&category=${Category}`).then((res) => {
         return res.data;
      });
 }
