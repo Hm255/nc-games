@@ -1,14 +1,23 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://nc-game.cyclic.app/api/", //source database url
+  baseURL: "https://nc-game.cyclic.app/api", //source database url
 });
 
-export const getReviews = (sortedBy, orderedBy, Category) => {
-    return api.get(`/reviews/?sortedBy=${sortedBy}&orderedBy=${orderedBy}&category=${Category}`).then((res) => {
-        return res.data;
-     });
-}
+export const getReviews = (sortedBy, orderedBy, category) => {
+    return api.get("reviews",{
+    Params: {
+        sort_by: sortedBy, 
+        order_by: orderedBy, 
+        category: category,
+    },
+})
+    .then((res) => {
+        console.log(res.data)
+        return res.data; 
+    })
+    };
+
 
 export const getReview = (id) => {
     return api.get(`/reviews/${id}`).then((res) => {

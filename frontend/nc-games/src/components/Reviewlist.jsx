@@ -2,39 +2,26 @@ import React, {useState, useEffect} from "react";
 import { getReviews } from "../api";
 import { useParams, Link } from "react-router-dom";
 
-
     const Reviewlist = ()=>{
     const [reviews, setReviews] = useState([]);
+    const [sortedBy, setSort] = useState("");
+    const [orderedBy, setOrder] = useState("");
     const [loading, setLoading] = useState(true);
-    //TIP
-    //the useEffect is just data being loaded in/collected
-    //always start a useEffect with something that shows the app is loading
         const {category} = useParams()
         
     useEffect(()=>{ 
-        getReviews()
+        getReviews(sortedBy, orderedBy, category)
         .then((data) => {
-            
-            if(category === undefined){   
-                
-                setReviews(data.reviews);
-                setLoading(false);
-            }
-            else{
-            const filtered = data.reviews.filter(review => 
-            review.category === category  
-            )
-            
-            setReviews(filtered); 
+            console.log([data, sortedBy, orderedBy, category])
+            setOrder(orderedBy)
+            setSort(sortedBy)
+            setReviews(data.reviews); 
             setLoading(false);
-
-        }
 })
-    }, [category]);
+    }, [sortedBy, orderedBy, category]);
 
-
- if(loading) return <h2>loading...</h2>//loading message
-//set loading to false at the end of all useEffects, then add functionality in between setLoadings.
+ if(loading) return <h2>loading...</h2>
+else{
 return <ul>{reviews.map((review) => {
 return <li className="reviews" key={review['review_id']}> 
 <Link to={`/reviews/${review.review_id}`}>
@@ -49,4 +36,5 @@ return <li className="reviews" key={review['review_id']}>
 })}
 </ul>
 }
+    }
 export default Reviewlist
