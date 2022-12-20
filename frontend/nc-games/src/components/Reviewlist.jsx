@@ -1,24 +1,43 @@
-import React, {useState, useEffect} from "react";
+import * as React from 'react';
+import {useState, useEffect} from "react";
 import { getReviews } from "../api";
-import { useParams, Link } from "react-router-dom";
+import { useParams, useSearchParams, Link} from "react-router-dom";
+import Sortby from "./Sortby"
+import Orderby from "./Orderby"
+
+
+const options2 = [
+    { value: 'review_id', label: 'Review ID' },
+    { value: 'Votes', label: 'Vote count' },
+    { value: 'created_at', label: 'recent' },
+    { value: 'comment_count', label: 'comment count' }
+  ];
+
+const options = [{value: 'asc', label: 'ascending order'}, 
+                {value: 'Desc', label: 'descending order'}
+            ];
+
 
     const Reviewlist = ()=>{
     const [reviews, setReviews] = useState([]);
-    const [sortedBy, setSort] = useState("");
-    const [orderedBy, setOrder] = useState("");
     const [loading, setLoading] = useState(true);
-        const {category} = useParams()
-        
+    const [sortBy, setSort] = useState('');
+    const [orderBy, setOrder] = useState('');
+    const [Category, setCategory] = useState('');
+   
+    
+
     useEffect(()=>{ 
-        getReviews(sortedBy, orderedBy, category)
+        getReviews(sortBy, orderBy, Category)
         .then((data) => {
-            console.log([data, sortedBy, orderedBy, category])
-            setOrder(orderedBy)
-            setSort(sortedBy)
+           console.log([data.reviews, {Category}, orderBy, sortBy])
+           setSort(sortBy);
+           setOrder(orderBy);
+            setCategory(Category);
             setReviews(data.reviews); 
             setLoading(false);
 })
-    }, [sortedBy, orderedBy, category]);
+    }, [sortBy, orderBy, Category]);
 
  if(loading) return <h2>loading...</h2>
 else{
@@ -32,9 +51,15 @@ return <li className="reviews" key={review['review_id']}>
 <br></br>
 <p className="category">Category:</p>{review.category}
 <br></br>
-<p className="votes">Votes:</p>{review.votes}</li> 
-})}
+<p className="votes">Votes:</p>{review.votes}
+</li> 
+})
+}
+<div className = 'OrderBy'>
+<Orderby options={options} />
+</div>
+<Sortby options={options2}/>
 </ul>
 }
-    }
+}
 export default Reviewlist

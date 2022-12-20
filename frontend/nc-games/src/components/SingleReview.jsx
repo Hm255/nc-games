@@ -12,9 +12,7 @@ export default function SingleReview() {
         getReview(review_id)
         .then((reviewFromApi) => {
             setReview(reviewFromApi); 
-            setLoading(false);
-
-        
+            setLoading(false);  
 })
     }, [review_id]);
 

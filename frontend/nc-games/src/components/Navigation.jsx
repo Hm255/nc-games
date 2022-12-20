@@ -15,6 +15,10 @@ export default function Navigation () {
         event.preventDefault();
         navigate("/Categories");
     };
+    const toAPI = (event) => {
+        event.preventDefault();
+        navigate("/api");
+    };
 
 
     return (
@@ -25,6 +29,9 @@ export default function Navigation () {
         </Link>
         <Link to="/Categories">
         <button handleClick={toCategories}>Categories</button>
+        </Link>
+        <Link to="/api">
+        <button handleClick={toAPI}>API</button>
         </Link>
     </div>
     )
