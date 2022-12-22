@@ -7,14 +7,17 @@ const api = axios.create({
 export const getReviews = (sortBy, orderBy, Category) => {
     return api.get(`/reviews`, {
         params:{
-            sortBy: sortBy,
-            orderBy: orderBy,
+            sortedBy: sortBy,
+            orderedBy: orderBy,
             Category: Category,
         },
     })
     .then((res) => {
-        console.log(res.data)
+        console.log(res)
         return res.data; 
+    })
+    .catch((err) => {
+        console.log(err)
     })
 };
 
@@ -43,5 +46,25 @@ export const getComment = (id, comment_id) => {
 }
 
 export const getApi = () => {
-    return api.get(`/api`)
+    return api.get(`/api`).then((res) => {
+        return res.data;
+    })
+}
+
+export const editReview = (inc_votes, id) => {
+    return api.put(`/reviews/${id}`).then((res) => {
+        return res.data;
+    })
+}
+
+export const postComment = (id, comment_id) => {
+    return api.post(`/reviews/${id}${comment_id}`).then((res) => {
+        return res.data.comment;
+     });
+}
+
+export const removeComment = (id, comment_id) => {
+    return api.delete(`/reviews/${id}${comment_id}`).then((res) => {
+        return res.data.comment;
+})
 }

@@ -1,19 +1,19 @@
 import * as React from 'react';
 import {useState, useEffect} from "react";
 import { getReviews } from "../api";
-import { useParams, useSearchParams, Link} from "react-router-dom";
+import { useParams, useSearchParams, Link, useNavigate} from "react-router-dom";
 import Sortby from "./Sortby"
 import Orderby from "./Orderby"
 
 
-const options2 = [
+const sort = [
     { value: 'review_id', label: 'Review ID' },
     { value: 'Votes', label: 'Vote count' },
     { value: 'created_at', label: 'recent' },
     { value: 'comment_count', label: 'comment count' }
   ];
 
-const options = [{value: 'asc', label: 'ascending order'}, 
+const order = [{value: 'asc', label: 'ascending order'}, 
                 {value: 'Desc', label: 'descending order'}
             ];
 
@@ -21,23 +21,21 @@ const options = [{value: 'asc', label: 'ascending order'},
     const Reviewlist = ()=>{
     const [reviews, setReviews] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [sortBy, setSort] = useState('');
-    const [orderBy, setOrder] = useState('');
-    const [Category, setCategory] = useState('');
-   
+    const [selectedOrder, setSelectedOrder] = useState('desc');
+    const [selectedSort, setSelectedSort] = useState('votes');
     
+    const {Category} = useParams();
 
     useEffect(()=>{ 
-        getReviews(sortBy, orderBy, Category)
+        getReviews(selectedSort, selectedOrder, Category)
         .then((data) => {
-           console.log([data.reviews, {Category}, orderBy, sortBy])
-           setSort(sortBy);
-           setOrder(orderBy);
-            setCategory(Category);
+           console.log([data.reviews, {Category}, selectedOrder, selectedSort])
+           setSelectedSort(selectedSort);
+           setSelectedOrder(selectedOrder);
             setReviews(data.reviews); 
             setLoading(false);
 })
-    }, [sortBy, orderBy, Category]);
+    }, [selectedOrder, selectedSort, Category]);
 
  if(loading) return <h2>loading...</h2>
 else{
@@ -56,9 +54,9 @@ return <li className="reviews" key={review['review_id']}>
 })
 }
 <div className = 'OrderBy'>
-<Orderby options={options} />
+<Orderby options={order} />
 </div>
-<Sortby options={options2}/>
+<Sortby options={sort}/>
 </ul>
 }
 }
