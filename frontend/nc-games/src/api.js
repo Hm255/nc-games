@@ -13,11 +13,12 @@ export const getReviews = (sortBy, orderBy, Category) => {
         },
     })
     .then((res) => {
-        console.log(res)
+        console.log(res.request['responseURL'])
         return res.data; 
     })
     .catch((err) => {
         console.log(err)
+        console.log(err.request['responseURL'])
     })
 };
 

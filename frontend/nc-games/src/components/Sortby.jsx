@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import React from 'react';
-import  {useParams, Link, useNavigate} from "react-router-dom";
+import  {useNavigate} from "react-router-dom";
 import { getReviews } from "../api";
 
 export default function Sortby(props){
-    const [selectedSort, setSelectedSort] = useState('comment_count');
+    const [selectedSort, setSelectedSort] = useState('');
+    const [selectedOrder, setSelectedOrder] = useState('');
     const [reviews, setReviews] = useState([]);
     const navigate = useNavigate();
 
@@ -17,30 +18,26 @@ export default function Sortby(props){
         return false;
       };
 
-    const updateUrl = () => {
-        const currentUrl = new URL(window.location.href);
-        currentUrl.searchParams.set('sortedBy', selectedSort);
-        console.log(currentUrl);
-        navigate(currentUrl.search);
-      }
-
       useEffect(() => {
-        getReviews(selectedSort)
+        const currentUrl = new URL(window.location.href);
+        getReviews(selectedSort, selectedOrder)
           .then((response) => {
+            setSelectedSort(selectedSort)
+            currentUrl.searchParams.set('sortedBy', selectedSort);
             setReviews(response);
+            navigate(currentUrl.search);
             console.log(response)
           })
           .catch(error => {
             console.error(error);
           });
-      }, [selectedSort]);
+      }, [selectedSort, selectedOrder]);
 
       return (
         <div>
         <select value={selectedSort} onChange={handleChange}>
           {sortByList}
         </select>
-        <button onClick={updateUrl}>Sort by {selectedSort}</button>
         </div>
       );
     };

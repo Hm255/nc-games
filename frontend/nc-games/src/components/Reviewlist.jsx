@@ -1,41 +1,48 @@
 import * as React from 'react';
 import {useState, useEffect} from "react";
 import { getReviews } from "../api";
-import { useParams, useSearchParams, Link, useNavigate} from "react-router-dom";
-import Sortby from "./Sortby"
-import Orderby from "./Orderby"
-
-
-const sort = [
-    { value: 'review_id', label: 'Review ID' },
-    { value: 'Votes', label: 'Vote count' },
-    { value: 'created_at', label: 'recent' },
-    { value: 'comment_count', label: 'comment count' }
-  ];
-
-const order = [{value: 'asc', label: 'ascending order'}, 
-                {value: 'Desc', label: 'descending order'}
-            ];
-
+import { useParams, Link, useNavigate} from "react-router-dom";
+import SortbyOrderBy from './SortbyOrderby';
+const currentUrl = new URL(window.location.href);
 
     const Reviewlist = ()=>{
     const [reviews, setReviews] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [selectedOrder, setSelectedOrder] = useState('desc');
-    const [selectedSort, setSelectedSort] = useState('votes');
-    
+    const [order, setOrder] = useState('desc');
+    const [sort, setSort] = useState('created_at');
+    const navigate = useNavigate();
     const {Category} = useParams();
 
     useEffect(()=>{ 
-        getReviews(selectedSort, selectedOrder, Category)
+        getReviews(sort, order, Category)
         .then((data) => {
-           console.log([data.reviews, {Category}, selectedOrder, selectedSort])
-           setSelectedSort(selectedSort);
-           setSelectedOrder(selectedOrder);
+           console.log([data.reviews, {Category}, order, sort])
+           setSort(sort);
+           setOrder(order);
             setReviews(data.reviews); 
+            currentUrl.searchParams.set('sortedBy', sort);
+            currentUrl.searchParams.set('orderedBy', order);
+            navigate(currentUrl.search);
             setLoading(false);
 })
-    }, [selectedOrder, selectedSort, Category]);
+    }, [order, sort, Category]);
+
+
+//   useEffect(() => {
+//   getReviews(sort, order, Category)
+//   .then((data) => {
+//     setSort(sort);
+//     setOrder(order);
+//     setReviews(data.reviews);
+//      currentUrl.searchParams.set('sortedBy', sort);
+//     currentUrl.searchParams.set('orderedBy', order);
+//     navigate(currentUrl.search);
+//     console.log(data.reviews)
+//   })
+//   .catch(error => {
+//     console.error(error);
+//   });
+// }, [sort, order, Category]);    
 
  if(loading) return <h2>loading...</h2>
 else{
@@ -53,10 +60,9 @@ return <li className="reviews" key={review['review_id']}>
 </li> 
 })
 }
-<div className = 'OrderBy'>
-<Orderby options={order} />
+<div className="sortByOrderBy">
+<SortbyOrderBy  />
 </div>
-<Sortby options={sort}/>
 </ul>
 }
 }

@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import React from 'react';
-import  {useParams, Link, useNavigate, useLocation} from "react-router-dom";
+import  {useNavigate} from "react-router-dom";
 import { getReviews } from "../api";
 
-export default function Orderby(props){
-    const [selectedOrder, setSelectedOrder] = useState('Desc');
+export default function Sortby(props){
+    const [selectedSort, setSelectedSort] = useState('');
+    const [selectedOrder, setSelectedOrder] = useState('');
     const [reviews, setReviews] = useState([]);
     const navigate = useNavigate();
 
@@ -13,35 +14,37 @@ export default function Orderby(props){
       ));
 
       const handleChange = (event) => {
+        setSelectedSort (selectedSort);
         setSelectedOrder(event.target.value);
         return false;
       };
 
-    const updateUrl = () => {
-        const currentUrl = new URL(window.location.href);
-        currentUrl.searchParams.set('orderedBy', selectedOrder);
-        console.log(currentUrl);
-        navigate(currentUrl.search);
-      }
+   
 
       useEffect(() => {
-        getReviews(selectedOrder)
+        const currentUrl = new URL(window.location.href);
+        getReviews(selectedSort, selectedOrder)
           .then((response) => {
+            setSelectedOrder(selectedOrder)
+            currentUrl.searchParams.set('orderedBy', selectedOrder);
             setReviews(response);
-            console.log(response);
+            navigate(currentUrl.search);
+            console.log(currentUrl)
+            console.log(response)
           })
           .catch(error => {
             console.error(error);
           });
-      }, [selectedOrder]);
+      }, [selectedSort, selectedOrder]);
 
       return (
         <div>
         <select value={selectedOrder} onChange={handleChange}>
           {orderByList}
         </select>
-        <button onClick={updateUrl}>Order by {selectedOrder}</button>
         </div>
       );
     };
 
+
+  
