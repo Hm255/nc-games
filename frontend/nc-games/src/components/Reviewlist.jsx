@@ -13,13 +13,16 @@ const currentUrl = new URL(window.location.href);
     const navigate = useNavigate();
     const {Category} = useParams();
 
+    const handleSortChange = (newValue) => {
+      setSort(newValue);
+    }
+
+
     useEffect(()=>{ 
         getReviews(sort, order, Category)
         .then((data) => {
-           console.log([data.reviews, {Category}, order, sort])
-           setSort(sort);
-           setOrder(order);
             setReviews(data.reviews); 
+            console.log([data.reviews, {Category}, order, sort])
             currentUrl.searchParams.set('sortedBy', sort);
             currentUrl.searchParams.set('orderedBy', order);
             navigate(currentUrl.search);
@@ -61,7 +64,7 @@ return <li className="reviews" key={review['review_id']}>
 })
 }
 <div className="sortByOrderBy">
-<SortbyOrderBy  />
+<SortbyOrderBy onChange={handleSortChange} />
 </div>
 </ul>
 }
