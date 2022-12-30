@@ -1,8 +1,10 @@
 import * as React from 'react';
 import {useState, useEffect} from "react";
 import { getReviews } from "../api";
-import { useParams, Link, useNavigate} from "react-router-dom";
-import SortbyOrderBy from './SortbyOrderby';
+import {Link, useNavigate} from "react-router-dom";
+import Sortby from './Sortby';
+import Orderby from './Orderby';
+import CategorySort from './CategorySort';
 const currentUrl = new URL(window.location.href);
 
     const Reviewlist = ()=>{
@@ -10,42 +12,33 @@ const currentUrl = new URL(window.location.href);
     const [loading, setLoading] = useState(true);
     const [order, setOrder] = useState('desc');
     const [sort, setSort] = useState('created_at');
+    const [Category, setCategory] = useState('');
     const navigate = useNavigate();
-    const {Category} = useParams();
 
-    const handleSortChange = (newValue) => {
+    const handleSortChange = (newValue) => { 
       setSort(newValue);
     }
+    const handleOrderChange = (newValue) => {
+        setOrder(newValue);
+      }
+      const handleCategoryChange = (newValue) => { 
+        setCategory(newValue);
+      }
 
 
     useEffect(()=>{ 
         getReviews(sort, order, Category)
         .then((data) => {
             setReviews(data.reviews); 
-            console.log([data.reviews, {Category}, order, sort])
+            console.log([Category, order, sort])
             currentUrl.searchParams.set('sortedBy', sort);
-            currentUrl.searchParams.set('orderedBy', order);
+              currentUrl.searchParams.set('orderedBy', order);
+              currentUrl.searchParams.set('category', Category);
+            console.log(currentUrl);
             navigate(currentUrl.search);
             setLoading(false);
 })
-    }, [order, sort, Category]);
-
-
-//   useEffect(() => {
-//   getReviews(sort, order, Category)
-//   .then((data) => {
-//     setSort(sort);
-//     setOrder(order);
-//     setReviews(data.reviews);
-//      currentUrl.searchParams.set('sortedBy', sort);
-//     currentUrl.searchParams.set('orderedBy', order);
-//     navigate(currentUrl.search);
-//     console.log(data.reviews)
-//   })
-//   .catch(error => {
-//     console.error(error);
-//   });
-// }, [sort, order, Category]);    
+    }, [order, sort, Category]);  
 
  if(loading) return <h2>loading...</h2>
 else{
@@ -63,8 +56,10 @@ return <li className="reviews" key={review['review_id']}>
 </li> 
 })
 }
-<div className="sortByOrderBy">
-<SortbyOrderBy onChange={handleSortChange} />
+<div className="sorter">
+<Sortby onChange={handleSortChange} />
+<Orderby onChange={handleOrderChange} />
+<CategorySort onChange={handleCategoryChange} />
 </div>
 </ul>
 }

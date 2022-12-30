@@ -1,50 +1,26 @@
-import { useState, useEffect } from "react";
 import React from 'react';
-import  {useNavigate} from "react-router-dom";
-import { getReviews } from "../api";
+const Orderby = ({ onChange }) => {
 
-export default function Sortby(props){
-    const [selectedSort, setSelectedSort] = useState('');
-    const [selectedOrder, setSelectedOrder] = useState('');
-    const [reviews, setReviews] = useState([]);
-    const navigate = useNavigate();
+    const Order = [{value: 'asc', label: 'ascending order'}, 
+                    {value: 'desc', label: 'descending order'}
+                ];
 
-    const orderByList = props.options.map((option) => (
+      const orderByList = Order.map((option) => (
         <option value={option.value}>{option.label}</option>
       ));
 
-      const handleChange = (event) => {
-        setSelectedSort (selectedSort);
-        setSelectedOrder(event.target.value);
-        return false;
+    const handleChange = (event) => {
+            onChange(event.target.value)
+      
       };
-
-   
-
-      useEffect(() => {
-        const currentUrl = new URL(window.location.href);
-        getReviews(selectedSort, selectedOrder)
-          .then((response) => {
-            setSelectedOrder(selectedOrder)
-            currentUrl.searchParams.set('orderedBy', selectedOrder);
-            setReviews(response);
-            navigate(currentUrl.search);
-            console.log(currentUrl)
-            console.log(response)
-          })
-          .catch(error => {
-            console.error(error);
-          });
-      }, [selectedSort, selectedOrder]);
 
       return (
         <div>
-        <select value={selectedOrder} onChange={handleChange}>
+        <select name='Ordered' id='orderBy' options={Order} onChange={handleChange} >
           {orderByList}
         </select>
         </div>
       );
-    };
+  }
 
-
-  
+export default Orderby

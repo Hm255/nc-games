@@ -9,16 +9,16 @@ export const getReviews = (sortBy, orderBy, Category) => {
         params:{
             sortedBy: sortBy,
             orderedBy: orderBy,
-            Category: Category,
+            category: Category
         },
     })
     .then((res) => {
-        console.log(res.request['responseURL'])
+        console.log(res.request['responseURL'], 'no error')
         return res.data; 
     })
     .catch((err) => {
         console.log(err)
-        console.log(err.request['responseURL'])
+        console.log(err.request['responseURL'], 'ERROR')
     })
 };
 

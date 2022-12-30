@@ -31,30 +31,30 @@ const navigate = useNavigate();
       ));
 
     const handleChange = (event) => {
-        if(event.target.name === 'Sorted'){
+        if(event.target.name !== 'Ordered'){
             setSort(event.target.value)
             onChange(event.target.value)
         }
-        else if(event.target.name === 'Ordered'){
+        else if(event.target.name !== 'Sorted'){
             setOrder(event.target.value)
             onChange(event.target.value)
         }
       };
 
-      useEffect(() => {
-        getReviews(sort, order)
-          .then((response) => {
-            setReviews(response);
-             currentUrl.searchParams.set('sortedBy', sort);
-            currentUrl.searchParams.set('orderedBy', order);
-            navigate(currentUrl.search);
-            console.log(response)
+      // useEffect(() => {
+      //   getReviews(sort, order)
+      //     .then((response) => {
+      //       setReviews(response);
+      //         currentUrl.searchParams.set('sortedBy', sort);
+      //       currentUrl.searchParams.set('orderedBy', order);
+      //       navigate(currentUrl.search);
+      //       console.log(response)
             
-          })
-          .catch(error => {
-            console.error(error);
-          });
-      }, [sort, order]);
+      //     })
+      //     .catch(error => {
+      //       console.error(error);
+      //     });
+      // }, [sort, order]);
       
       return (
         <div>
