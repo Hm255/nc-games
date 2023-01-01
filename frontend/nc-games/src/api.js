@@ -46,6 +46,16 @@ export const getComment = (id, comment_id) => {
      });
 }
 
+export const getComments = (review_id) => {
+    return api.get(`/reviews/${review_id}/comments`).then((res) => {
+        return res.data
+    })
+    .catch((err) => {
+        console.log(err)
+        console.log(err.request['responseURL'], 'ERROR')
+    })
+}
+
 export const getApi = () => {
     return api.get(`/api`).then((res) => {
         return res.data;

@@ -1,50 +1,46 @@
-// import React, {useState, useEffect} from "react";
-// import { getComments } from "../api";
-// import { useParams, Link } from "react-router-dom";
-// import Sortby from "./Sortby";
-// import Orderby from "./Orderby";
+import * as React from 'react';
+import {useState, useEffect} from "react";
+import { getComments } from "../api";
+import {Link, useNavigate, useParams} from "react-router-dom";
+const currentUrl = new URL(window.location.href);
 
-//     const Reviewlist = ()=>{
-//     const [reviews, setReviews] = useState([]);
-//     const [sortedBy, setSort] = useState('created_at');
-//     const [orderedBy, setOrder] = useState('desc');
-//     const [loading, setLoading] = useState(true);
-//         const {category} = useParams()
-        
-//     useEffect(()=>{ 
-//         getReviews(sortedBy, orderedBy, category)
-//         .then((data) => {
-//             console.log([data, sortedBy, orderedBy, category])
-//             setOrder(orderedBy)
-//             setSort(sortedBy)
-//             setReviews(data.reviews); 
-//             setLoading(false);
-// })
-//     }, [sortedBy, orderedBy, category]);
+    const Commentlist = ()=>{
+    const {review_id} = useParams()
+    const [comments, setComments] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
-//  if(loading) return <h2>loading...</h2>
-// else{
-// return <ul>{reviews.map((review) => {
-// return <li className="reviews" key={review['review_id']}> 
-// <Link to={`/reviews/${review.review_id}`}>
-//        {review.review_id}
-//        </Link>
-// <br></br>
-// <p className="title">Title:</p>{review.title}
-// <br></br>
-// <p className="category">Category:</p>{review.category}
-// <br></br>
-// <p className="votes">Votes:</p>{review.votes}</li> 
-// })}
-// <div>
-// <Sortby />
-// <Orderby />    
-// </div>
-// </ul>
+    useEffect(()=>{ 
+        getComments(review_id)
+        .then((data) => {
+            setComments(data);
+            console.log(data); 
+            navigate(currentUrl.search);
+            setLoading(false);
+})
+    }, [review_id]);  
 
-// }
- 
-// }
-
-// export default Commentlist
-
+ if(loading) return <h2>loading...</h2>
+else if (comments.length === 0){
+return <p className='noComments'> no comments </p>
+}{
+return <ul>{comments.map((comment) => {
+return <li className="comments" key={comment['comment_id']}> 
+<Link to={`/reviews/${review_id.review_id}/${comment.comment_id}`}>
+       {comment.comment_id}
+       </Link>
+<br></br>
+<p className="Author">Author:</p>{comments.author}
+<br></br>
+<p className="comment-body">Body:</p>{comments.body}
+<br></br>
+<p className="commentVotes">Votes:</p>{comments.votes}
+<br></br>
+<p className="comment-created-at">Made:</p>{comments.created_at}
+</li> 
+})
+}
+</ul>
+}
+}
+export default Commentlist

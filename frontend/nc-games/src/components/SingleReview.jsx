@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getReview } from "../api";
 import { useParams } from "react-router-dom";
-//import comments from "./Commentlist"
+import Commentlist from "./Commentlist"
 
 export default function SingleReview() {
     const {review_id} = useParams()
@@ -34,7 +34,10 @@ export default function SingleReview() {
      <br></br>
      <p className="revBody">Body:</p>{review.review_body}
      <br></br>
-     <p className="votes">Votes:</p>{review.votes}</li> 
+     <p className="votes">Votes:</p>{review.votes}
+     <br></br>
+  <Commentlist />
+     </li>
      }
      </ul>
  }
