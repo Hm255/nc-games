@@ -13,21 +13,21 @@ const currentUrl = new URL(window.location.href);
     useEffect(()=>{ 
         getComments(review_id)
         .then((data) => {
-            setComments([data]);
-            console.log(data); 
+            setComments(data.comment);
+            console.log(data.comment); 
             navigate(currentUrl.search);
             setLoading(false);
 })
     }, [review_id]);  
 
  if(loading) return <h2>loading...</h2>
-else if (!comments){
+else if (comments.length === 0){
 return <p className='noComments'> no comments </p>
 }
 else {
 return <ul>{comments.map((comment) => {
-return <li className="comments" key="{comment}"> 
-<Link to={`reviews/${review_id.review_id}/${comment.comment_id}`}>
+return <li className="comments" key={comment['comment_id']}> 
+<Link to={`${comment.comment_id}`}>
        {comment.comment_id}
        </Link>
 <br></br>
