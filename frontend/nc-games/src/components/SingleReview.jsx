@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getReview } from "../api";
 import { useParams } from "react-router-dom";
-import Commentlist from "./Commentlist"
+import Commentlist from "./Commentlist" //this is empty before singleReview fully renders
 
 export default function SingleReview() {
     const {review_id} = useParams()

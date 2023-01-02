@@ -48,6 +48,7 @@ export const getComment = (id, comment_id) => {
 
 export const getComments = (review_id) => {
     return api.get(`/reviews/${review_id}/comments`).then((res) => {
+        console.log(res.request['responseURL'], 'no error')
         return res.data
     })
     .catch((err) => {

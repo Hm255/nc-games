@@ -13,7 +13,7 @@ const currentUrl = new URL(window.location.href);
     useEffect(()=>{ 
         getComments(review_id)
         .then((data) => {
-            setComments(data);
+            setComments([data]);
             console.log(data); 
             navigate(currentUrl.search);
             setLoading(false);
@@ -21,22 +21,23 @@ const currentUrl = new URL(window.location.href);
     }, [review_id]);  
 
  if(loading) return <h2>loading...</h2>
-else if (comments.length === 0){
+else if (!comments){
 return <p className='noComments'> no comments </p>
-}{
+}
+else {
 return <ul>{comments.map((comment) => {
-return <li className="comments" key={comment['comment_id']}> 
-<Link to={`/reviews/${review_id.review_id}/${comment.comment_id}`}>
+return <li className="comments" key="{comment}"> 
+<Link to={`reviews/${review_id.review_id}/${comment.comment_id}`}>
        {comment.comment_id}
        </Link>
 <br></br>
-<p className="Author">Author:</p>{comments.author}
+<p className="Author">Author:</p>{comment.author}
 <br></br>
-<p className="comment-body">Body:</p>{comments.body}
+<p className="comment-body">Body:</p>{comment.body}
 <br></br>
-<p className="commentVotes">Votes:</p>{comments.votes}
+<p className="commentVotes">Votes:</p>{comment.votes}
 <br></br>
-<p className="comment-created-at">Made:</p>{comments.created_at}
+<p className="comment-created-at">Made:</p>{comment.created_at}
 </li> 
 })
 }
