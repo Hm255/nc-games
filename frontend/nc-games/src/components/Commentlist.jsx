@@ -1,3 +1,4 @@
+import NewComment from './NewComment';
 import * as React from 'react';
 import {useState, useEffect} from "react";
 import { getComments } from "../api";
@@ -27,6 +28,7 @@ return <p className='noComments'> no comments </p>
 else {
 return <ul>{comments.map((comment) => {
 return <li className="comments" key={comment['comment_id']}> 
+<div className = "comment">
 <Link to={`${comment.comment_id}`}>
        {comment.comment_id}
        </Link>
@@ -38,8 +40,17 @@ return <li className="comments" key={comment['comment_id']}>
 <p className="commentVotes">Votes:</p>{comment.votes}
 <br></br>
 <p className="comment-created-at">Made:</p>{comment.created_at}
+</div>
 </li> 
 })
+}
+<NewComment />
+{
+//make a form for comments including a comment body
+//add newcomment.length !== 0/!comment.body variable to make sure comment is full before its posted
+//set loading status to true when submit is pressed.
+//add new comment to comments with setComments
+//make sure details are added correctly
 }
 </ul>
 }

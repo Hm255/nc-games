@@ -16,7 +16,7 @@ const CategorySort = ({ onChange }) => {
             onChange(event.target.value)
         }
       return (
-        <div>
+        <div className="categoryButton">
         <select name='Category' id='Category' options={Categories} onChange={handleChange} >
           {categoryList}
         </select>

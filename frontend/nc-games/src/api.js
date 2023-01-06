@@ -69,14 +69,13 @@ export const editReview = (inc_votes, id) => {
     })
 }
 
-export const postComment = (id, comment_id) => {
-    return api.post(`/reviews/${id}${comment_id}`).then((res) => {
+export const postComment = (id) => {
+    return api.post(`/reviews/${id}/comments`).then((res) => {
         return res.data.comment;
      });
 }
 
 export const removeComment = (id, comment_id) => {
     return api.delete(`/reviews/${id}${comment_id}`).then((res) => {
-        return res.data.comment;
 })
 }
