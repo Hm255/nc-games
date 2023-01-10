@@ -54,6 +54,7 @@ export const getComments = (review_id) => {
     .catch((err) => {
         console.log(err)
         console.log(err.request['responseURL'], 'ERROR')
+        return {status: 404, message: "no comment found"}
     })
 }
 
@@ -69,13 +70,17 @@ export const editReview = (inc_votes, id) => {
     })
 }
 
-export const postComment = (id) => {
-    return api.post(`/reviews/${id}/comments`).then((res) => {
-        return res.data.comment;
+export const postComment = (id, comment) => {
+    return api.post(`/reviews/${id}/comments`, `${comment}`)
+    .then((res) => {
+        return [res.data];
+     })
+     .catch((err)=> {
+        console.log(err)
      });
 }
 
-export const removeComment = (id, comment_id) => {
-    return api.delete(`/reviews/${id}${comment_id}`).then((res) => {
+export const removeComment = (comment_id) => {
+    return api.delete(`/comments/${comment_id}`).then((res) => {
 })
 }

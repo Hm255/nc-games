@@ -1,14 +1,18 @@
 import './App.css';
+import {useState} from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { UserContext } from "./components/UserContext";
 import Welcome from "./components/Welcome";
 import Reviewlist from "./components/Reviewlist";
 import Categories from "./components/Categories";
 import SingleReview from "./components/SingleReview";
 import Comment from "./components/Comment";
+import React from 'react';
 function App() {
-  
+  const [user, setUser] = useState("cooljmessy");
 
   return (
+    <UserContext.Provider value={{ user }}>
     <BrowserRouter>
     <div className="App">
           <Routes>
@@ -20,6 +24,7 @@ function App() {
           </Routes>
     </div>
     </BrowserRouter>
+    </UserContext.Provider>
   );
 }
 
