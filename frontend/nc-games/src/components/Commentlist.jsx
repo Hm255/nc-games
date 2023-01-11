@@ -73,18 +73,21 @@ const currentUrl = new URL(window.location.href);
     
     const DeletePost = (event, comment_id) => {
       event.preventDefault();
+      setDeleting(true)
       removeComment(comment_id)
       .then((res)=> {
         console.log("deleted", res)
+        setDeleting(false)
       })
         .catch((err) => {console.log(err)
+          setDeleting(false)
           return <h2>invalid request</h2>
         })
       }
 
-if(loading) return <h2>loading page...</h2>
-else if (posting) return <h2>posting...{comment.comment_id}</h2>
-else if (deleting) return <h2>deleting... {comment.comment_id}</h2>
+if(loading) return <h2>loading page... press F5/refresh after 10 seconds if this persists</h2>
+else if (posting) return <h2>posting... press F5/refresh after 10 seconds if this persists{comment.comment_id}</h2>
+else if (deleting) return <h2>deleting... press F5/refresh after 10 seconds if this persists{comment.comment_id}</h2>
 else if (comments.length === 0){
 return <p className='noComments'> no comments </p>
 }
@@ -103,7 +106,10 @@ return <li className="comments" key={comment['comment_id']}>
 <p className="commentVotes">Votes:</p>{comment.votes}
 <br></br>
 <p className="comment-created-at">Made:</p>{comment.created_at}
-{comment.author=user ? (<button disabled={deleting} onClick={(event) => DeletePost(event, comment.comment_id)}>Delete</button>): ( //comment_id is only accessible here, when something has an ID and has to be removed you can reference the ID from anywhere it can be referenced from 
+{comment.author===user ? (
+<button disabled={deleting} 
+onClick={(event) => 
+DeletePost(event, comment.comment_id)}>Delete</button>): ( //comment_id is only accessible here, when something has an ID and has to be removed you can reference the ID from anywhere it can be referenced from 
             ""
           )}
 </div>
