@@ -109,7 +109,7 @@ return <li className="comments" key={comment['comment_id']}>
 {comment.author===user ? (
 <button disabled={deleting} 
 onClick={(event) => 
-DeletePost(event, comment.comment_id)}>Delete</button>): ( //comment_id is only accessible here, when something has an ID and has to be removed you can reference the ID from anywhere it can be referenced from 
+DeletePost(event, comment.comment_id)}>Delete Your Comment</button>): ( //comment_id is only accessible here, when something has an ID and has to be removed you can reference the ID from anywhere it can be referenced from 
             ""
           )}
 </div>
