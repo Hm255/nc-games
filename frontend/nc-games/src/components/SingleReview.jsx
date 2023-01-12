@@ -18,6 +18,7 @@ export default function SingleReview() {
 
     if(loading) return <h2>loading...</h2>//loading message
     //set loading to false at the end of all useEffects, then add functionality in between setLoadings.
+    else if (review_id === undefined) return <h2>review doesn't exist</h2>
     return <ul>{<li className="review" key={review['review_id']}> 
      <br></br>
      <p className="title">Title:</p>{review.title}
