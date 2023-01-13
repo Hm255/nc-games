@@ -68,6 +68,11 @@ export const editReview = (inc_votes, id) => {
     })
 }
 
+export const getAllComments = () => {
+    return api.get(`/comments`).then((res) => {
+        return res.data
+    })
+}
 export const postComment = (id, comment) => {
     return api.post(`/reviews/${id}/comments`, `${comment}`)
     .then((res) => {

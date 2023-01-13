@@ -8,11 +8,11 @@ import CategorySort from './CategorySort';
 const currentUrl = new URL(window.location.href);
 
     const Reviewlist = ()=>{
-    const [reviews, setReviews] = useState([]);
+    const [reviews, setReviews] = useState([]); 
     const [loading, setLoading] = useState(true);
-    const [order, setOrder] = useState('desc');
-    const [sort, setSort] = useState('created_at');
-    const [Category, setCategory] = useState('');
+    const [order, setOrder] = useState('desc');     //sets the order
+    const [sort, setSort] = useState('created_at'); //sets the sorted variable
+    const [Category, setCategory] = useState('');   //sets the category
     const navigate = useNavigate();
 
     const handleSortChange = (newValue) => { 

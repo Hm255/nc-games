@@ -1,19 +1,22 @@
 import * as React from 'react';
 import {useContext, useState, useEffect} from "react";
 import { UserContext } from './UserContext';   
-import { getComments, postComment, removeComment } from "../api";
+import { CommentContext } from './CommentContext';
+import { getComments, getAllComments, postComment, removeComment } from "../api";
 import {Link, useNavigate, useParams} from "react-router-dom";
 const currentUrl = new URL(window.location.href);
 
     const Commentlist = ()=>{
-    const {review_id} = useParams()                 //selected review
-    const [comments, setComments] = useState([]);   //all comments 
-    const [loading, setLoading] = useState(true);   //when something is rendering
-    const [newComment, setNewComment] = useState('')//the actual comment
+    const {review_id} = useParams()                    //selected review
+    const [comments, setComments] = useState([]);      //all comments 
+    const [loading, setLoading] = useState(true);      //when something is rendering
+    const [newComment, setNewComment] = useState('')   //the actual comment
     const [posting, setPosting] = useState(false)      //for when a post needs to load in
-    const [deleting, setDeleting] = useState(false);//for when a post needs deleting
-    const { user } = useContext(UserContext);       //loads a user as context, the user is set in App.js
-    
+    const [deleting, setDeleting] = useState(false);   //for when a post needs deleting
+    const { user } = useContext(UserContext);          //loads a user as context, the user is set in App.js
+    const {AllComments} = useContext(CommentContext);
+    const [allComments, setAllComments] = useState();
+
     const comment = {
       author: user,
       body: newComment,
@@ -34,16 +37,21 @@ const currentUrl = new URL(window.location.href);
 })
     }, [review_id]); 
 
+    useEffect(() => {
+      getAllComments().then((res) => {
+        setAllComments(res.comments);
+      })
+    }, [])
+
     const handleCommentChange = (event) => { //sets the value of whats in the comment body to what's typed into the box
         setNewComment(event.target.value);
       };
            
-
       useEffect(()=> { 
         if(posting){ 
       postComment(review_id, comment)
       .then((res)=> {
-        console.log(res, review_id, comment)
+        console.log(review_id, comment)
         setPosting(false)
       })
       .catch((err)=> {
@@ -52,16 +60,12 @@ const currentUrl = new URL(window.location.href);
       })
       
       setComments((prevComments) => {
-        comment.comment_id = prevComments.length
+        comment.comment_id = allComments.slice(allComments.length-1)[0].comment_id+1
         return [...prevComments, comment]});
       setNewComment('');
         }
     }, [review_id, posting])
     
-
-
-
-
     const DeletePost = (event, comment_id) => {
       event.preventDefault();
       setDeleting(true)

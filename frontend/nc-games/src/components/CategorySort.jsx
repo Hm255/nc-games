@@ -1,6 +1,6 @@
 import React from 'react';
 const CategorySort = ({ onChange }) => {
-    const Categories = [{value: 'strategy', label: 'Strategy'}, 
+    const Categories = [{value: 'strategy', label: 'Strategy'}, //options for the dropdown
                     {value: 'hidden-roles', label: 'hidden roles'},
                     {value: 'dexterity', label: 'Dexterity'},                
                     {value: 'push-your-luck', label: 'push your luck'},
@@ -8,7 +8,7 @@ const CategorySort = ({ onChange }) => {
                     {value: 'deck-building', label: 'Deck building'},   
                     {value: 'engine-building', label: 'Engine building'}];   
 
-      const categoryList = Categories.map((option) => (
+      const categoryList = Categories.map((option) => ( //map through options array
         <option value={option.value}>{option.label}</option>
       ));
 

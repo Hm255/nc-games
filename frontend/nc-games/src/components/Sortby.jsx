@@ -1,14 +1,14 @@
 import React from 'react';
 const Sortby = ({ onChange }) => {
 
-    const Sort = [
+    const Sort = [ //options for the dropdown
         { value: 'review_id', label: 'Review ID' },
         { value: 'Votes', label: 'Vote count' },
         { value: 'created_at', label: 'recent' },
         { value: 'comment_count', label: 'comment count' }
       ];
                 
-    const sortByList = Sort.map((option) => (
+    const sortByList = Sort.map((option) => ( //map through options array
         <option value={option.value}>{option.label}</option>
       ));
 
