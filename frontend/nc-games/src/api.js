@@ -25,7 +25,11 @@ export const getReviews = (sortBy, orderBy, Category) => {
 export const getReview = (id) => {
     return api.get(`/reviews/${id}`).then((res) => {
         return res.data.review;
-     });
+     })
+     .catch((err)=>{
+        console.log(err)
+        return <h2>Error: {err} at {(err.request['responseURL'])}</h2>
+     })
 }
 
 export const getCategories = () => {
@@ -55,12 +59,6 @@ export const getComments = (review_id) => {
         console.log(err)
         console.log(err.request['responseURL'], 'ERROR')
         return {status: 404, message: "no comment found"}
-    })
-}
-
-export const getApi = () => {
-    return api.get(`/api`).then((res) => {
-        return res.data;
     })
 }
 

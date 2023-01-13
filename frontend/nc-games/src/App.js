@@ -6,10 +6,9 @@ import Welcome from "./components/Welcome";
 import Reviewlist from "./components/Reviewlist";
 import Categories from "./components/Categories";
 import SingleReview from "./components/SingleReview";
-import Comment from "./components/Comment";
 import React from 'react';
 function App() {
-  const [user, setUser] = useState("cooljmessy");
+  const [user, setUser] = useState("cooljmessy"); //username set here
 
   return (
     <UserContext.Provider value={{ user }}>
@@ -20,7 +19,7 @@ function App() {
             <Route path="/Reviewlist" element={<Reviewlist />} />
             <Route path="/Categories" element={<Categories />} />
             <Route path="/reviews/:review_id" element={<SingleReview />}/>
-            <Route path="/reviews/:review_id/:comment" element={<Comment />}/>
+            <Route path="/reviews/:review_id/:comment" />
           </Routes>
     </div>
     </BrowserRouter>
