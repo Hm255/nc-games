@@ -22,7 +22,7 @@ function App() {
             <Route path="/Reviewlist" element={<Reviewlist />} />
             <Route path="/Categories" element={<Categories />} />
             <Route path="/reviews/:review_id" element={[<SingleReview />]}/>
-            <Route path="/reviews/:review_id/:comment" />
+            <Route path="/reviews/:review_id/:comment"/>
           </Routes>
     </div>
     </BrowserRouter>

@@ -74,16 +74,19 @@ export const getAllComments = () => {
     })
 }
 export const postComment = (id, comment) => {
-    return api.post(`/reviews/${id}/comments`, `${comment}`)
+    return api.post(`/reviews/${id}/comments`, comment)
     .then((res) => {
+        console.log(comment)
         return [res.data];
      })
      .catch((err)=> {
+        console.log(comment)
         console.log(err)
      });
 }
 
 export const removeComment = (comment_id) => {
     return api.delete(`/comments/${comment_id}`).then((res) => {
+        console.log(res)
 })
 }

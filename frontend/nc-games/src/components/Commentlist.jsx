@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {useContext, useState, useEffect} from "react";
 import { UserContext } from './UserContext';   
-import { CommentContext } from './CommentContext';
 import { getComments, getAllComments, postComment, removeComment } from "../api";
 import {Link, useNavigate, useParams} from "react-router-dom";
 const currentUrl = new URL(window.location.href);
@@ -14,13 +13,12 @@ const currentUrl = new URL(window.location.href);
     const [posting, setPosting] = useState(false)      //for when a post needs to load in
     const [deleting, setDeleting] = useState(false);   //for when a post needs deleting
     const { user } = useContext(UserContext);          //loads a user as context, the user is set in App.js
-    const {AllComments} = useContext(CommentContext);
     const [allComments, setAllComments] = useState();
 
     const comment = {
       author: user,
       body: newComment,
-      created_at: Date.now(),
+      created_at: new Date(Date.now()).toString(),
       votes: 0,
       review_id: review_id,
     };
@@ -37,7 +35,7 @@ const currentUrl = new URL(window.location.href);
 })
     }, [review_id]); 
 
-    useEffect(() => {
+    useEffect(() => { //gets all comments
       getAllComments().then((res) => {
         setAllComments(res.comments);
       })
@@ -47,21 +45,19 @@ const currentUrl = new URL(window.location.href);
         setNewComment(event.target.value);
       };
            
-      useEffect(()=> { 
+      useEffect(()=> { //for comment posting, res=undefined
         if(posting){ 
       postComment(review_id, comment)
       .then((res)=> {
-        console.log(review_id, comment)
         setPosting(false)
+        setComments((prevComments) => {
+          comment.comment_id = allComments.slice(allComments.length-1)[0].comment_id+1
+          return [...prevComments, comment]});
       })
       .catch((err)=> {
         console.log(err)
         setPosting(false)
       })
-      
-      setComments((prevComments) => {
-        comment.comment_id = allComments.slice(allComments.length-1)[0].comment_id+1
-        return [...prevComments, comment]});
       setNewComment('');
         }
     }, [review_id, posting])
