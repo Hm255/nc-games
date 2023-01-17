@@ -44,8 +44,8 @@ setLoading(false)
      <br></br>
      <p className="votes">Votes:</p>{review.votes}
      <br></br>
-  <Commentlist />
      </li>
      }
+     <Commentlist />
      </ul>
  }

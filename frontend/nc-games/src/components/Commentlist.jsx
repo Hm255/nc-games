@@ -1,6 +1,9 @@
 import * as React from 'react';
 import {useContext, useState, useEffect} from "react";
 import { UserContext } from './UserContext';   
+import {ImBin} from "react-icons/im";
+import {AiOutlineEnter} from "react-icons/ai";
+import { CiFaceMeh } from "react-icons/ci";
 import { getComments, getAllComments, postComment, removeComment } from "../api";
 import {Link, useNavigate, useParams} from "react-router-dom";
 const currentUrl = new URL(window.location.href);
@@ -15,7 +18,7 @@ const currentUrl = new URL(window.location.href);
     const [err, setErr] = useState('')                  //for displaying errors
     const { user } = useContext(UserContext);          //loads a user as context, the user is set in App.js
     const [allComments, setAllComments] = useState();
-
+//comment_id in the thousands
     const comment = { //must only have user inputted variables
       username: user,
       body: newComment
@@ -82,7 +85,7 @@ else if (deleting) return <h2>deleting... press F5/refresh after 10 seconds if t
 else if (err) return <h2>{err}</h2>
 else if (comments.length === 0){
 return <ul>
-  <p className='noComments'> no comments </p>
+  <p className='noComments'> no comments <CiFaceMeh /></p>
   <form>
         <input
           type="text"
@@ -108,10 +111,11 @@ return <li className="comments" key={comment['comment_id']}>
 <p className="commentVotes">Votes:</p>{comment.votes}
 <br></br>
 <p className="comment-created-at">Made:</p>{comment.created_at}
+<br></br>
 {comment.author===user ? ( //if we own the comment
 <button disabled={deleting} //you can only click to set deleting once
 onClick={(event) => 
-DeletePost(event, comment.comment_id)}>Delete Your Comment</button>): ( //if the user matches, this button appears and the user can delete its comment
+DeletePost(event, comment.comment_id)}><ImBin /></button>): ( //if the user matches, this button appears and the user can delete its comment
             '' //otherwise it shows nothing
           )}
 </div>
@@ -121,10 +125,13 @@ DeletePost(event, comment.comment_id)}>Delete Your Comment</button>): ( //if the
 <form>
         <input
           type="text"
+          className="commentBox"
           value={newComment}
           onChange={handleCommentChange}
         />
-        <button type="submit" onClick={(event) => setPosting(true)}>Add Comment</button>
+        <br>
+        </br>
+        <button type="submit" className="submitButton "onClick={(event) => setPosting(true)}><AiOutlineEnter /></button>
       </form>
       {/* {comments.map(comment => (
         <comment key={comment.id} comment={comment} />

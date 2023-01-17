@@ -6,10 +6,7 @@ export default function Categories() {
   const [isLoading, setIsLoading] = useState(true);
   const [err, setErr] = useState('')
   const navigate = useNavigate();
-
-
-
-
+  
   useEffect(() => {
     api.getCategories().then(({ categories }) => {
       setCategories(categories);
