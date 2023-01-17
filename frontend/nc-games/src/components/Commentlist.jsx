@@ -15,17 +15,14 @@ const currentUrl = new URL(window.location.href);
     const { user } = useContext(UserContext);          //loads a user as context, the user is set in App.js
     const [allComments, setAllComments] = useState();
 
-    const comment = {
-      author: user,
-      body: newComment,
-      created_at: new Date(Date.now()).toString(),
-      votes: 0,
-      review_id: review_id,
+    const comment = { //must only have user inputted variables
+      username: user,
+      body: newComment
     };
    
     const navigate = useNavigate(); 
 
-    useEffect(()=>{ //gets comments
+    useEffect(()=>{ //gets and post comments
         getComments(review_id)
         .then((data) => {
             setComments(data.comment);
@@ -33,25 +30,16 @@ const currentUrl = new URL(window.location.href);
             navigate(currentUrl.search);
             setLoading(false);
 })
-    }, [review_id]); 
-
-    useEffect(() => { //gets all comments
-      getAllComments().then((res) => {
-        setAllComments(res.comments);
-      })
-    }, [])
-
-    const handleCommentChange = (event) => { //sets the value of whats in the comment body to what's typed into the box
-        setNewComment(event.target.value);
-      };
-           
-      useEffect(()=> { //for comment posting, res=undefined
-        if(posting){ 
+getAllComments().then((res) => {
+  setAllComments(res.comments);
+})
+if(posting){ 
       postComment(review_id, comment)
       .then((res)=> {
         setPosting(false)
         setComments((prevComments) => {
           comment.comment_id = allComments.slice(allComments.length-1)[0].comment_id+1
+          console.log(comment.comment_id)
           return [...prevComments, comment]});
       })
       .catch((err)=> {
@@ -60,9 +48,13 @@ const currentUrl = new URL(window.location.href);
       })
       setNewComment('');
         }
-    }, [review_id, posting])
-    
-    const DeletePost = (event, comment_id) => {
+    }, [review_id, posting]); 
+
+    const handleCommentChange = (event) => { //sets the value of whats in the comment body to what's typed into the box
+        setNewComment(event.target.value);
+      };
+               
+    const DeletePost = (event, comment_id) => { //button for deleting posts
       event.preventDefault();
       setDeleting(true)
       removeComment(comment_id)
@@ -120,11 +112,7 @@ DeletePost(event, comment.comment_id)}>Delete Your Comment</button>): ( //if the
       ))} */}
 
 {
-//make a form for comments including a comment body
-//add newcomment.length !== 0/!comment.body variable to make sure comment is full before its posted
-//set loading status to true when submit is pressed.
-//add new comment to comments with setComments
-//make sure details are added correctly
+//comment_id needs fixing
 }
 </ul>
 }

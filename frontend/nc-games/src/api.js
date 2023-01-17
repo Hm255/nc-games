@@ -76,7 +76,7 @@ export const getAllComments = () => {
 export const postComment = (id, comment) => {
     return api.post(`/reviews/${id}/comments`, comment)
     .then((res) => {
-        console.log(comment)
+        console.log(res)
         return [res.data];
      })
      .catch((err)=> {
