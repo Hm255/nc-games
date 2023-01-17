@@ -5,6 +5,8 @@ import {Link, useNavigate} from "react-router-dom";
 import Sortby from './Sortby';
 import Orderby from './Orderby';
 import CategorySort from './CategorySort';
+import { BsBook } from "react-icons/bs";
+
 const currentUrl = new URL(window.location.href);
 
     const Reviewlist = ()=>{
@@ -51,7 +53,7 @@ else{
 return <ul>{reviews.map((review) => {
 return <li className="reviews" key={review['review_id']}> 
 <Link to={`/reviews/${review.review_id}`}>
-       {review.review_id}
+       <BsBook />
        </Link>
 <br></br>
 <p className="title">Title:</p>{review.title}

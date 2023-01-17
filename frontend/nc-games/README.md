@@ -46,6 +46,8 @@ The comments on the page come from different users and each user can only remove
 This page will return all included categories with their descriptions. Clicking on a category will lead you to /Reviewlist with the filter set to filtering this category. The new url will be Reviewlist?category=selected category
 
 
-
+## Decoration:
+CSS
+react-icons
 
 
