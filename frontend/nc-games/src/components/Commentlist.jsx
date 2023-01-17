@@ -81,7 +81,17 @@ else if (posting) return <h2>posting... press F5/refresh after 10 seconds if thi
 else if (deleting) return <h2>deleting... press F5/refresh after 10 seconds if this persists{comment.comment_id}</h2>
 else if (err) return <h2>{err}</h2>
 else if (comments.length === 0){
-return <p className='noComments'> no comments </p>
+return <ul>
+  <p className='noComments'> no comments </p>
+  <form>
+        <input
+          type="text"
+          value={newComment}
+          onChange={handleCommentChange}
+        />
+        <button type="submit" onClick={(event) => setPosting(true)}>Add Comment</button>
+      </form>
+</ul>
 }
 else {
 return <ul>{comments.map((comment) => {
