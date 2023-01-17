@@ -12,6 +12,7 @@ const currentUrl = new URL(window.location.href);
     const [loading, setLoading] = useState(true);
     const [order, setOrder] = useState('desc');     //sets the order
     const [sort, setSort] = useState('created_at'); //sets the sorted variable
+    const [err, setErr] = useState('')
     const [Category, setCategory] = useState('');   //sets the category
     const navigate = useNavigate();
 
@@ -36,10 +37,15 @@ const currentUrl = new URL(window.location.href);
               currentUrl.searchParams.set('category', Category);
             console.log(currentUrl);
             navigate(currentUrl.search);
-            setLoading(false);
+            setLoading(false)
 })
+.catch((err) => {
+  console.log(err)
+  setErr(err)
+  setLoading(false)
+})  
     }, [order, sort, Category]);  
-
+  if(err) return <h2>{err}</h2>
  if(loading) return <h2>loading...</h2>
 else{
 return <ul>{reviews.map((review) => {

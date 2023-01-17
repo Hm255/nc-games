@@ -6,17 +6,24 @@ import Commentlist from "./Commentlist" //this is empty before singleReview full
 export default function SingleReview() {
     const {review_id} = useParams()
     const [review, setReview] = useState({});
+    const [err, setErr] = useState('')                  //for displaying errors
     const [loading, setLoading] = useState(true);
 
     useEffect(()=>{ 
         getReview(review_id)
         .then((reviewFromApi) => {
             setReview(reviewFromApi); 
-            setLoading(false);  
 })
+.catch((err) => {
+    console.log(err)
+    setErr(err)
+    setLoading(false)
+})  
+setLoading(false)
     }, [review_id]);
 
     if(loading) return <h2>loading...</h2>//loading message
+    if(err) return <h2>{err}</h2>
     //set loading to false at the end of all useEffects, then add functionality in between setLoadings.
     else if (review_id === undefined) return <h2>review doesn't exist</h2>
     return <ul>{<li className="review" key={review['review_id']}> 

@@ -4,6 +4,7 @@ import * as api from "../api";
 export default function Categories() {
   const [categories, setCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [err, setErr] = useState('')
   const navigate = useNavigate();
 
 
@@ -12,9 +13,15 @@ export default function Categories() {
   useEffect(() => {
     api.getCategories().then(({ categories }) => {
       setCategories(categories);
-      setIsLoading(false);
-    });
+      setIsLoading(false)
+    })
+    .catch((err) => {
+      console.log(err)
+      setErr(err)
+      setIsLoading(false)
+  })  
   }, []);
+  if(err)return<h2>{err}</h2>
   if (isLoading) return <h2>loading...</h2>;
   return (
     <ul>

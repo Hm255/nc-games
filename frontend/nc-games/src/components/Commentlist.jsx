@@ -12,6 +12,7 @@ const currentUrl = new URL(window.location.href);
     const [newComment, setNewComment] = useState('')   //the actual comment
     const [posting, setPosting] = useState(false)      //for when a post needs to load in
     const [deleting, setDeleting] = useState(false);   //for when a post needs deleting
+    const [err, setErr] = useState('')                  //for displaying errors
     const { user } = useContext(UserContext);          //loads a user as context, the user is set in App.js
     const [allComments, setAllComments] = useState();
 
@@ -33,9 +34,14 @@ const currentUrl = new URL(window.location.href);
 getAllComments().then((res) => {
   setAllComments(res.comments);
 })
+.catch((err)=> {
+  console.log(err)
+  setErr(err)
+})
 if(posting){ 
       postComment(review_id, comment)
       .then((res)=> {
+        console.log(res)
         setPosting(false)
         setComments((prevComments) => {
           comment.comment_id = allComments.slice(allComments.length-1)[0].comment_id+1
@@ -44,6 +50,7 @@ if(posting){
       })
       .catch((err)=> {
         console.log(err)
+        setErr(err)
         setPosting(false)
       })
       setNewComment('');
@@ -63,6 +70,7 @@ if(posting){
         setDeleting(false)
       })
         .catch((err) => {console.log(err)
+          setErr(err)
           setDeleting(false)
           return <h2>invalid request</h2>
         })
@@ -71,6 +79,7 @@ if(posting){
 if(loading) return <h2>loading page... press F5/refresh after 10 seconds if this persists</h2>
 else if (posting) return <h2>posting... press F5/refresh after 10 seconds if this persists{comment.comment_id}</h2>
 else if (deleting) return <h2>deleting... press F5/refresh after 10 seconds if this persists{comment.comment_id}</h2>
+else if (err) return <h2>{err}</h2>
 else if (comments.length === 0){
 return <p className='noComments'> no comments </p>
 }
