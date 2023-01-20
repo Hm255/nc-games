@@ -5,7 +5,7 @@ import {ImBin} from "react-icons/im";
 import {AiOutlineEnter} from "react-icons/ai";
 import { CiFaceMeh } from "react-icons/ci";
 import { getComments, getAllComments, postComment, removeComment } from "../api";
-import {Link, useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 const currentUrl = new URL(window.location.href);
 
     const Commentlist = ()=>{
@@ -18,7 +18,7 @@ const currentUrl = new URL(window.location.href);
     const [err, setErr] = useState('')                  //for displaying errors
     const { user } = useContext(UserContext);          //loads a user as context, the user is set in App.js
     const [allComments, setAllComments] = useState();
-//comment_id in the thousands
+    
     const comment = { //must only have user inputted variables
       username: user,
       body: newComment
@@ -30,7 +30,7 @@ const currentUrl = new URL(window.location.href);
         getComments(review_id)
         .then((data) => {
             setComments(data.comment);
-            console.log(data.comment); 
+            console.table(data.comment); 
             navigate(currentUrl.search);
             setLoading(false);
 })
@@ -100,9 +100,6 @@ else {
 return <ul>{comments.map((comment) => {
 return <li className="comments" key={comment['comment_id']}> 
 <div className = "comment">
-<Link to={`${comment.comment_id}`}>
-       {comment.comment_id}
-       </Link>
 <br></br>
 <p className="Author">Author:</p>{comment.author}
 <br></br>
@@ -131,14 +128,13 @@ DeletePost(event, comment.comment_id)}><ImBin /></button>): ( //if the user matc
         />
         <br>
         </br>
-        <button type="submit" className="submitButton "onClick={(event) => setPosting(true)}><AiOutlineEnter /></button>
+       {newComment === '' ? ('please enter a comment before posting'):(<button type="submit" className="submitButton "onClick={(event) => setPosting(true)}><AiOutlineEnter /></button>)} 
       </form>
       {/* {comments.map(comment => (
         <comment key={comment.id} comment={comment} />
       ))} */}
 
 {
-//comment_id needs fixing
 }
 </ul>
 }

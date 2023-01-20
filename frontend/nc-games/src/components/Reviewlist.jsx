@@ -28,13 +28,13 @@ const currentUrl = new URL(window.location.href);
         setCategory(newValue);
       }
 
-
     useEffect(()=>{ 
         getReviews(sort, order, Category)
         .then((data) => {
             setReviews(data.reviews); 
+            console.table(data.reviews)
             console.log([Category, order, sort])
-            currentUrl.searchParams.set('sortedBy', sort);
+              currentUrl.searchParams.set('sortedBy', sort);
               currentUrl.searchParams.set('orderedBy', order);
               currentUrl.searchParams.set('category', Category);
             console.log(currentUrl);
@@ -48,6 +48,7 @@ const currentUrl = new URL(window.location.href);
 })  
     }, [order, sort, Category]);  
   if(err) return <h2>{err}</h2>
+  if(reviews === undefined) return <h2>no review here</h2>
  if(loading) return <h2>loading...</h2>
 else{
 return <ul>{reviews.map((review) => {

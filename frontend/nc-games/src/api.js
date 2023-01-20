@@ -28,7 +28,7 @@ export const getReview = (id) => {
      })
      .catch((err)=>{
         console.log(err)
-        return <h2>Error: {err} at {(err.request['responseURL'])}</h2>
+        return <h2>Error: {err.request.status} at {(err.request['responseURL'])}</h2>
      })
 }
 
