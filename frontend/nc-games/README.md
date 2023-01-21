@@ -45,6 +45,5 @@ The comments on the page come from different users and each user can only remove
 CSS
 react-icons
 
-### there will be error handling added, this will be an easy screen to read containing the error code and the 
-
+### there will be error handling added
 

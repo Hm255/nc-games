@@ -15,7 +15,7 @@ const currentUrl = new URL(window.location.href);
     const [newComment, setNewComment] = useState('')   //the actual comment
     const [posting, setPosting] = useState(false)      //for when a post needs to load in
     const [deleting, setDeleting] = useState(false);   //for when a post needs deleting
-    const [err, setErr] = useState('')                  //for displaying errors
+    const [err, setErr] = useState(null)                  //for displaying errors
     const { user } = useContext(UserContext);          //loads a user as context, the user is set in App.js
     const [allComments, setAllComments] = useState();
     

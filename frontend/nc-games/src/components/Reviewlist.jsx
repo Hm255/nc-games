@@ -14,7 +14,7 @@ const currentUrl = new URL(window.location.href);
     const [loading, setLoading] = useState(true);
     const [order, setOrder] = useState('desc');     //sets the order
     const [sort, setSort] = useState('created_at'); //sets the sorted variable
-    const [err, setErr] = useState('')
+    const [err, setErr] = useState(null)
     const [Category, setCategory] = useState('');   //sets the category
     const navigate = useNavigate();
 
