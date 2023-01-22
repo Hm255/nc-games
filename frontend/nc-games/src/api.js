@@ -24,6 +24,11 @@ export const getReviews = (sortBy, orderBy, Category) => {
 
 export const getReview = (id) => {
     return api.get(`/reviews/${id}`).then((res) => {
+        console.log(res.data)
+        if(res.data.review === undefined){
+            console.log(res)
+            return Promise.reject({status: 404, message: "no review found"})
+        }
         return res.data.review;
      })
      .catch((err)=>{
@@ -35,6 +40,10 @@ export const getReview = (id) => {
 export const getCategories = () => {
     return api.get(`/categories/`).then((res) => {
         return res.data;
+     })
+     .catch((err)=>{
+        console.log(err)
+        return <h2>Error: {err.request.status} at {(err.request['responseURL'])}</h2>
      });
 }
 
@@ -52,13 +61,13 @@ export const getComment = (id, comment_id) => {
 
 export const getComments = (review_id) => {
     return api.get(`/reviews/${review_id}/comments`).then((res) => {
+        console.log(res)
         console.log(res.request['responseURL'], 'no error')
         return res.data
     })
     .catch((err) => {
         console.log(err)
         console.log(err.request['responseURL'], 'ERROR')
-        return {status: 404, message: "no comment found"}
     })
 }
 

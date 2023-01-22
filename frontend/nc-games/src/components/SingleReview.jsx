@@ -15,6 +15,7 @@ export default function SingleReview(props) {
     useEffect(()=>{ 
         getReview(review_id)
         .then((reviewFromApi) => {//for error handling, take the return obj and check if it is ok, if not then it will return its given errors defined in the frontend api
+            setReview(reviewFromApi)
             if(!reviewFromApi.ok){
                 console.table(reviewFromApi.props.children)
                 setError(reviewFromApi.props.children[1])
@@ -22,15 +23,13 @@ export default function SingleReview(props) {
                     setErrMsg('invalid location')
                     setErrFix('only numbers are valid in the url')
                 }
-                else if(error === 404){
+                else if(error === 404){ //only works for review id's above 2147483647 (non-existent comments are still picked up thus no 404 is thrown)
                     setErrMsg('review doesnt exist')
                     setErrFix('search for an existing review')
                 }
             }
-            setReview(reviewFromApi); 
 })
 .catch((err) => {
-    setError({err})
     console.log(err)
     setLoading(false)
 })  
@@ -38,7 +37,7 @@ setLoading(false)
     }, [review_id, error]);
 
     if(loading) return <h2>loading...</h2>//loading message
-    if(error) return <ul>{<h2>{error}: {errMsg}, <br></br>fix: {errFix}</h2>}</ul>
+    if(error) return <ul>{<h2 className="errorMessage">{error}: {errMsg}, <br></br>fix: {errFix}</h2>}</ul>
     //set loading to false at the end of all useEffects, then add functionality in between setLoadings.
     return <ul>{<li className="review" key={review['review_id']}> 
     <div className="wrapper">
