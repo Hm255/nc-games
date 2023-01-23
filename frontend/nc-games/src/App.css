@@ -169,6 +169,19 @@ margin-top: 1%;
 .noComments{
   scale: 200%;
 }
+.errorMessage{
+  scale: 100%;
+}
+.user{
+  text-align: center;
+border-radius: 1rem;
+border-style: solid;
+background-color: #FFFFFF;
+font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+margin-left: 37.5%;
+margin-right: 40.5%;
+margin-top: 1%;
+}
 /* .wrapper div{
   height: 60px;
   width: 60px;

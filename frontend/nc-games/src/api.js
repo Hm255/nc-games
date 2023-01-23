@@ -99,3 +99,9 @@ export const removeComment = (comment_id) => {
         console.log(res)
 })
 }
+
+export const getUsers = () => {
+    return api.get(`/users`).then((res)=> {
+        return res.data;
+    })
+}

@@ -9,29 +9,29 @@ export default function Navigation () {
 
     const toReviews = (event) => {
         event.preventDefault();
-        navigate("/Reviewlist");
+        navigate("/reviews");
     };
     const toCategories = (event) => {
         event.preventDefault();
         navigate("/Categories");
     };
-    const toAPI = (event) => {
+    const toUsers = (event) => {
         event.preventDefault();
-        navigate("/api");
+        navigate("/users");
     };
 
 
     return (
     <div>
         <h1>Welcome to NC games {name}</h1>
-        <Link to="/Reviewlist">
+        <Link to="/reviews">
         <button handleClick={toReviews}>Reviews</button>
         </Link>
         <Link to="/Categories">
         <button handleClick={toCategories}>Categories</button>
         </Link>
-        <Link to="/api">
-        <button handleClick={toAPI}>API</button>
+        <Link to="/users">
+        <button handleClick={toUsers}>Select user</button>
         </Link>
     </div>
     )

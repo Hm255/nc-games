@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { getReview } from "../api";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
+import {AiFillCaretLeft, AiFillFastBackward, AiOutlineUserSwitch} from "react-icons/ai";
 import ErrorPage from "./ErrorPage";
+import { UserContext } from "./UserContext";
 import Commentlist from "./Commentlist" //this is empty before singleReview fully renders
 
 export default function SingleReview(props) {
@@ -9,6 +11,7 @@ export default function SingleReview(props) {
     const [review, setReview] = useState({});
     const [error, setError] = useState(null)                  //for displaying errors
     const [errMsg, setErrMsg] = useState(null);
+    const { user } = useContext(UserContext); 
     const [errFix, setErrFix] = useState (null)
     const [loading, setLoading] = useState(true);
 
@@ -23,7 +26,7 @@ export default function SingleReview(props) {
                     setErrMsg('invalid location')
                     setErrFix('only numbers are valid in the url')
                 }
-                else if(error === 404){ //only works for review id's above 2147483647 (non-existent comments are still picked up thus no 404 is thrown)
+                else if(error === 404){ 
                     setErrMsg('review doesnt exist')
                     setErrFix('search for an existing review')
                 }
@@ -39,7 +42,18 @@ setLoading(false)
     if(loading) return <h2>loading...</h2>//loading message
     if(error) return <ul>{<h2 className="errorMessage">{error}: {errMsg}, <br></br>fix: {errFix}</h2>}</ul>
     //set loading to false at the end of all useEffects, then add functionality in between setLoadings.
-    return <ul>{<li className="review" key={review['review_id']}> 
+    return <ul>
+        <h2>{user}</h2>
+        <Link to={`/reviews`}>
+       <p>Back to reviews</p> <AiFillCaretLeft />
+        </Link>
+        <Link to={`/`}>
+       <p>back to home</p> <AiFillFastBackward />
+        </Link>
+        <Link to={`/users`}>
+       <p>change user</p> <AiOutlineUserSwitch />
+        </Link>
+        {<li className="review" key={review['review_id']}> 
     <div className="wrapper">
     <div><span className="dot"></span></div>
      <br></br>

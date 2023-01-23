@@ -1,16 +1,19 @@
 import * as React from 'react';
-import {useState, useEffect} from "react";
+import {useState, useEffect, useContext} from "react";
 import { getReviews } from "../api";
 import {Link, useNavigate} from "react-router-dom";
 import Sortby from './Sortby';
 import Orderby from './Orderby';
 import CategorySort from './CategorySort';
 import { BsBook } from "react-icons/bs";
+import { UserContext } from "./UserContext";
+import { AiFillFastBackward, AiOutlineUserSwitch } from "react-icons/ai";
 
 const currentUrl = new URL(window.location.href);
 
     const Reviewlist = ()=>{
     const [reviews, setReviews] = useState([]); 
+    const { user } = useContext(UserContext); 
     const [loading, setLoading] = useState(true);
     const [order, setOrder] = useState('desc');     //sets the order
     const [sort, setSort] = useState('created_at'); //sets the sorted variable
@@ -26,6 +29,10 @@ const currentUrl = new URL(window.location.href);
       }
       const handleCategoryChange = (newValue) => { 
         setCategory(newValue);
+      }
+      const handleReviewClick = (event, review_id) => {
+        console.log(review_id)
+        navigate(`/reviews/${review_id}`)
       }
 
     useEffect(()=>{ 
@@ -51,11 +58,21 @@ const currentUrl = new URL(window.location.href);
   if(reviews === undefined) return <h2>no review here</h2>
  if(loading) return <h2>loading...</h2>
 else{
-return <ul>{reviews.map((review) => {
-return <li className="reviews" key={review['review_id']}> 
-<Link to={`/reviews/${review.review_id}`}>
-       <BsBook />
-       </Link>
+return <ul>
+  <h2>{user}</h2>
+  <Link to={`/`}>
+       <p>back to home</p> <AiFillFastBackward />
+        </Link>
+        <Link to={`/users`}>
+       <p>change user</p> <AiOutlineUserSwitch />
+        </Link>
+  <div className="sorter">
+Sort by:<Sortby onChange={handleSortChange} />
+order by:<Orderby onChange={handleOrderChange} />
+category:<CategorySort onChange={handleCategoryChange} />
+</div>
+{reviews.map((review) => {
+return <li className="reviews" onClick={(event, review_id) => {handleReviewClick(event, review.review_id)}} key={review['review_id']}> 
 <br></br>
 <p className="title">Title:</p>{review.title}
 <br></br>
@@ -65,11 +82,6 @@ return <li className="reviews" key={review['review_id']}>
 </li> 
 })
 }
-<div className="sorter">
-<Sortby onChange={handleSortChange} />
-<Orderby onChange={handleOrderChange} />
-<CategorySort onChange={handleCategoryChange} />
-</div>
 </ul>
 }
 }

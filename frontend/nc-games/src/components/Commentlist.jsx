@@ -97,7 +97,8 @@ return <ul>
 </ul>
 }
 else {
-return <ul>{comments.map((comment) => {
+return <ul>
+{comments.map((comment) => {
 return <li className="comments" key={comment['comment_id']}> 
 <div className = "comment">
 <br></br>

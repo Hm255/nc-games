@@ -25,11 +25,6 @@ export default function Categories() {
       {categories.map((category) => {
         return  <li className="categories" key={category['slug']}> 
         <p className="categoryName">Category:</p><p className="catName">{category['slug']}</p>
-        
-       <Link to={`/Reviewlist?Category=${category.slug}`}>
-       {category.slug}
-       </Link>
-
         <p className="categoryDesc">description:</p><p className="catDesc">{category['description']}</p>
         </li> 
   
