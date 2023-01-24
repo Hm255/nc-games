@@ -1,10 +1,10 @@
 import React from "react";
 import {useNavigate, Link} from "react-router-dom";
-import { useState } from "react";
-
+import { useContext } from "react";
+import { UserContext } from "./UserContext";
 
 export default function Navigation () {
-    const [name, setName] = useState('user');
+    const { user } = useContext(UserContext); 
     const navigate = useNavigate();
 
     const toReviews = (event) => {
@@ -22,17 +22,34 @@ export default function Navigation () {
 
 
     return (
-    <div>
-        <h1>Welcome to NC games {name}</h1>
+    <div className="welcomePage">
+        <div className='wrapper'>
+        <div><span class="dot"></span></div>
+        <div><span class="dot"></span></div>
+        <div><span class="dot"></span></div>
+        <div><span class="dot"></span></div>
+        <div><span class="dot"></span></div>
+        <div><span class="dot"></span></div>
+        <div><span class="dot"></span></div>
+        <div><span class="dot"></span></div>
+        <div><span class="dot"></span></div>
+        <div><span class="dot"></span></div>
+        <div><span class="dot"></span></div>
+        <div><span class="dot"></span></div>
+        <div><span class="dot"></span></div>
+        <div><span class="dot"></span></div>
+        <div><span class="dot"></span></div>
+        <h1 className="welcomeTitle">Welcome to NC games {user}</h1>
         <Link to="/reviews">
-        <button handleClick={toReviews}>Reviews</button>
+        <button handleClick={toReviews} className="reviewEntry">Reviews</button>
         </Link>
         <Link to="/Categories">
-        <button handleClick={toCategories}>Categories</button>
+        <button handleClick={toCategories} className="categoryEntry">Categories</button>
         </Link>
         <Link to="/users">
-        <button handleClick={toUsers}>Select user</button>
+        <button handleClick={toUsers} className="userEntry">Select user</button>
         </Link>
+        </div>
     </div>
     )
 }

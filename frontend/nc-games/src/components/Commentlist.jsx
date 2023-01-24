@@ -95,7 +95,7 @@ return <ul>
         />
         <br>
         </br>
-        {newComment === '' ? ('please be logged in and enter a comment before posting'):(<button type="submit" disabled={!user} className="submitButton "onClick={(event) => setPosting(true)}><AiOutlineEnter /></button>)}
+        {newComment === '' ? (<p className ="commentValidation">please be logged in and enter a comment before posting</p>):(<button type="submit" disabled={!user} className="submitButton "onClick={(event) => setPosting(true)}><AiOutlineEnter /></button>)}
       </form>
 </ul>
 }
@@ -132,14 +132,8 @@ DeletePost(event, comment.comment_id)}><ImBin /></button>): ( //if the user matc
         />
         <br>
         </br>
-       {newComment === '' ? ('please log in and enter a comment before posting'):(<button type="submit" disabled={!user} className="submitButton "onClick={(event) => setPosting(true)}><AiOutlineEnter /></button>)} 
+       {newComment === '' ? (<p className="commentValidation">please be logged in and enter a comment before posting</p>):(<button type="submit" disabled={!user} className="submitButton "onClick={(event) => setPosting(true)}><AiOutlineEnter /></button>)} 
       </form>
-      {/* {comments.map(comment => (
-        <comment key={comment.id} comment={comment} />
-      ))} */}
-
-{
-}
 </ul>
 }
 }

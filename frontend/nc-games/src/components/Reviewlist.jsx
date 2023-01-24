@@ -63,17 +63,20 @@ const currentUrl = new URL(window.location.href);
  if(loading) return <h2>loading...</h2>
 else{
 return <ul>
-  <h2>{user}</h2>
+  
+  <h2 className='username'>{user}</h2>
   <Link to={`/`}>
        <p>back to home</p> <AiFillFastBackward />
         </Link>
         <Link to={`/users`}>
        <p>change user</p> <AiOutlineUserSwitch />
         </Link>
+
   <div className="sorter">
 Sort by:<Sortby onChange={handleSortChange} />
 order by:<Orderby onChange={handleOrderChange} />
 category:<CategorySort onChange={handleCategoryChange} />
+<div className='wrapper'>
 </div>
 {reviews.map((review) => {
 return <li className="reviews" onClick={(event, review_id) => {handleReviewClick(event, review.review_id)}} key={review['review_id']}> 
@@ -86,6 +89,7 @@ return <li className="reviews" onClick={(event, review_id) => {handleReviewClick
 </li> 
 })
 }
+</div>
 </ul>
 }
 }

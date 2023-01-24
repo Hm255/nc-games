@@ -43,7 +43,7 @@ setLoading(false)
     if(error) return <ul>{<h2 className="errorMessage">{error}: {errMsg}, <br></br>fix: {errFix}</h2>}</ul>
     //set loading to false at the end of all useEffects, then add functionality in between setLoadings.
     return <ul>
-        <h2>{user}</h2>
+        <h2 className="username">{user}</h2>
         <Link to={`/reviews`}>
        <p>Back to reviews</p> <AiFillCaretLeft />
         </Link>
@@ -55,7 +55,6 @@ setLoading(false)
         </Link>
         {<li className="review" key={review['review_id']}> 
     <div className="wrapper">
-    <div><span className="dot"></span></div>
      <br></br>
      <p className="title">Title:</p>{review.title}
      <br></br>
@@ -73,7 +72,6 @@ setLoading(false)
      <br></br>
      <p className="votes">Votes:</p>{review.votes}
      <br></br>
-     <div><span className="dot"></span></div>
      </div>
      </li>
      }

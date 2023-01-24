@@ -13,7 +13,7 @@ const Orderby = ({ onChange }) => {
     const handleChange = (event) => {
             onChange(event.target.value)
       };
-
+      <div><span class="dot"></span></div>
       return (
         <div>
         <select name='Ordered' selected="" id='orderBy' options={Order} onChange={handleChange} >

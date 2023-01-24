@@ -42,8 +42,10 @@ The review_id which can be selected from the top of the single reviews (the book
 The comments on the page come from different users and each user can only remove their own comments here with the button marked with a bin.
 
 ## Decoration:
-CSS
-react-icons
+CSS for bubbles and darkening shades of blue on page: https://codepen.io/diyorbek0309/pen/mdwbEve
+react-icons: 
+https://react-icons.github.io/react-icons/icons?name=ai
+https://react-icons.github.io/react-icons/icons?name=bs
 
 ### there will be error handling added
 
