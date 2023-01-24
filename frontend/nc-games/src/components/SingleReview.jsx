@@ -6,6 +6,7 @@ import ErrorPage from "./ErrorPage";
 import { UserContext } from "./UserContext";
 import Commentlist from "./Commentlist" //this is empty before singleReview fully renders
 
+
 export default function SingleReview(props) {
     const {review_id} = useParams()
     const [review, setReview] = useState({});
@@ -44,15 +45,10 @@ setLoading(false)
     //set loading to false at the end of all useEffects, then add functionality in between setLoadings.
     return <ul>
         <h2 className="username">{user}</h2>
-        <Link to={`/reviews`}>
-       <p>Back to reviews</p> <AiFillCaretLeft />
-        </Link>
-        <Link to={`/`}>
-       <p>back to home</p> <AiFillFastBackward />
-        </Link>
-        <Link to={`/users`}>
-       <p>change user</p> <AiOutlineUserSwitch />
-        </Link>
+       <nav className="Links"><Link to={`/reviews`}> <p>Back to reviews</p> <AiFillCaretLeft /></Link>
+            <Link to={`/`}>        <p>back to home</p> <AiFillFastBackward /></Link> 
+            <Link to={`/users`}>   <p>change user</p> <AiOutlineUserSwitch /></Link></nav> 
+        
         {<li className="review" key={review['review_id']}> 
     <div className="wrapper">
      <br></br>

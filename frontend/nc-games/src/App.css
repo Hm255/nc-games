@@ -188,7 +188,7 @@ margin-top: 1%;
   color: darkcyan;
   font-family: 'Courier New', Courier, monospace;
   border-radius: 1rem;
-  background-color: #FFFFFF
+  background-color: #FFFFFF;
 }
  .wrapper div{
   height: 60px;
@@ -286,7 +286,7 @@ div .dot {
   animation: animate 9s linear infinite;
 }
 
-@keyframes animate { /*0% is the starting state of all the div:nth's at 0s, 100% is what changes will happen to the bubble, specifically in 9s for wrapper div:nth-child(15)*/
+@keyframes animate { /*0% is the starting state of all the div:nth's (bubbles) at 0s, 100% is the bubble after its transformation, specifically in 9s for wrapper div:nth-child(15)*/
   0% { 
     transform: scale(0) translateY(0) rotate(70deg);
   }
@@ -328,4 +328,7 @@ div .dot {
 }
 .categoryEntry{
   transform: translate(0%, 1900%);
+}
+.Links{
+  display: inline;
 }

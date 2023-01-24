@@ -10,7 +10,6 @@ const Users = () => {
     const [users, setUsers] = useState([])
     const {user, setUser} = useContext(UserContext);
 
-    // const { user } = useContext(UserContext); 
 useEffect(()=> {
     getUsers()
     .then((allUsers)=>{
@@ -31,7 +30,7 @@ else{
         <Link to={`/`}>
        <p>back to home</p> <AiFillFastBackward />
         </Link>
-        <div>{user ? (<button className="loginButton" onClick={(event)=>{toReviews()}}>login as {user}</button>)
+        <div>{user ? (<button className="loginButton" onClick={(event)=>{navigate(-1)}}>login as {user}</button>)
         :('')}</div>
         {users.map((user) => {
             return <li className="users">
@@ -52,5 +51,3 @@ else{
 }
 
 export default Users
-//reviews come up undefined
-//set user to become the user context user

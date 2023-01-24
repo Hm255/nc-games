@@ -6,6 +6,7 @@ import {AiOutlineEnter} from "react-icons/ai";
 import { CiFaceMeh } from "react-icons/ci";
 import { getComments, getAllComments, postComment, removeComment } from "../api";
 import {useNavigate, useParams} from "react-router-dom";
+import Button from 'react-bootstrap/Button';
 const currentUrl = new URL(window.location.href);
 
     const Commentlist = ()=>{
@@ -132,7 +133,7 @@ DeletePost(event, comment.comment_id)}><ImBin /></button>): ( //if the user matc
         />
         <br>
         </br>
-       {newComment === '' ? (<p className="commentValidation">please be logged in and enter a comment before posting</p>):(<button type="submit" disabled={!user} className="submitButton "onClick={(event) => setPosting(true)}><AiOutlineEnter /></button>)} 
+       {newComment === '' ? (<p className="commentValidation">please be logged in and enter a comment before posting</p>):(<button type="submit" disabled={!user} className="submitButton" onClick={(event) => setPosting(true)}><AiOutlineEnter /></button>)} 
       </form>
 </ul>
 }
