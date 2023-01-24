@@ -5,19 +5,20 @@ import {Link, useNavigate} from "react-router-dom";
 import Sortby from './Sortby';
 import Orderby from './Orderby';
 import CategorySort from './CategorySort';
-import { BsBook } from "react-icons/bs";
 import { UserContext } from "./UserContext";
 import { AiFillFastBackward, AiOutlineUserSwitch } from "react-icons/ai";
 
 const currentUrl = new URL(window.location.href);
 
-    const Reviewlist = ()=>{
+    const Reviewlist = (props)=>{
     const [reviews, setReviews] = useState([]); 
     const { user } = useContext(UserContext); 
     const [loading, setLoading] = useState(true);
     const [order, setOrder] = useState('desc');     //sets the order
     const [sort, setSort] = useState('created_at'); //sets the sorted variable
     const [err, setErr] = useState(null)
+    const [errFix, setErrFix] = useState (null)
+    const [errMsg, setErrMsg] = useState(null);
     const [Category, setCategory] = useState('');   //sets the category
     const navigate = useNavigate();
 
@@ -38,6 +39,9 @@ const currentUrl = new URL(window.location.href);
     useEffect(()=>{ 
         getReviews(sort, order, Category)
         .then((data) => {
+          if(!data.ok){
+            console.table(data)
+          }
             setReviews(data.reviews); 
             console.table(data.reviews)
             console.log([Category, order, sort])

@@ -8,7 +8,6 @@ const Users = () => {
     const navigate = useNavigate()
     const [loading, setLoading] = useState(true)
     const [users, setUsers] = useState([])
-   // const [user, setUser] = useState('')
     const {user, setUser} = useContext(UserContext);
 
     // const { user } = useContext(UserContext); 
@@ -25,9 +24,6 @@ useEffect(()=> {
 const toReviews = (event) => {
     navigate("/reviews");
 };
-
-
-
 
 if(loading) return <h2>loading...</h2>
 else{

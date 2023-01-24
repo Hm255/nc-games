@@ -89,10 +89,13 @@ return <ul>
   <form>
         <input
           type="text"
+          className="commentBox"
           value={newComment}
           onChange={handleCommentChange}
         />
-        <button type="submit" onClick={(event) => setPosting(true)}>Add Comment</button>
+        <br>
+        </br>
+        {newComment === '' ? ('please be logged in and enter a comment before posting'):(<button type="submit" disabled={!user} className="submitButton "onClick={(event) => setPosting(true)}><AiOutlineEnter /></button>)}
       </form>
 </ul>
 }
@@ -102,7 +105,7 @@ return <ul>
 return <li className="comments" key={comment['comment_id']}> 
 <div className = "comment">
 <br></br>
-<p className="Author">Author:</p>{comment.author}
+<p className="Author" required={true} >Author:</p>{comment.author}
 <br></br>
 <p className="comment-body">Body:</p>{comment.body}
 <br></br>
@@ -129,7 +132,7 @@ DeletePost(event, comment.comment_id)}><ImBin /></button>): ( //if the user matc
         />
         <br>
         </br>
-       {newComment === '' ? ('please enter a comment before posting'):(<button type="submit" className="submitButton "onClick={(event) => setPosting(true)}><AiOutlineEnter /></button>)} 
+       {newComment === '' ? ('please log in and enter a comment before posting'):(<button type="submit" disabled={!user} className="submitButton "onClick={(event) => setPosting(true)}><AiOutlineEnter /></button>)} 
       </form>
       {/* {comments.map(comment => (
         <comment key={comment.id} comment={comment} />

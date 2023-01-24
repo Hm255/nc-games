@@ -12,7 +12,6 @@ const Orderby = ({ onChange }) => {
 
     const handleChange = (event) => {
             onChange(event.target.value)
-      
       };
 
       return (
