@@ -21,7 +21,7 @@ const currentUrl = new URL(window.location.href);
     const [errMsg, setErrMsg] = useState(null);
     const [Category, setCategory] = useState('');   //sets the category
     const navigate = useNavigate();
-
+//set queries to only be what can be selected
     const handleSortChange = (newValue) => { 
       setSort(newValue);
     }
