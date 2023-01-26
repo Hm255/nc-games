@@ -199,7 +199,6 @@ margin-top: 1%;
   top: 10%;
   left: 10%;
   animation: 4s linear infinite;
-  
 }
 div .dot {
   height: 10px;
@@ -239,6 +238,8 @@ div .dot {
   top: 30%;
   left: 60%;
   animation: animate 5s linear infinite;
+  /* background-size: contain;
+  background-image: url('https://stsci-opo.org/STScI-01G8GZQ3ZFJRD8YF8YZWMAXCE3.png'); to give your bubbles a background of your choosing */
 }
 .wrapper div:nth-child(7) {
   top: 70%;
@@ -331,4 +332,17 @@ div .dot {
 }
 .Links{
   display: inline;
+}
+.hardErrMsg{
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  font-family: sans-serif;
+  letter-spacing: 1px;
+  word-spacing: 2px;
+  color: #900000;
+  font-size: 20px;
+  font-weight: 888;
+  text-transform: uppercase;
 }

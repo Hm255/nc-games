@@ -3,7 +3,7 @@ import { getUsers } from "../api";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "./UserContext";
 import { AiFillFastBackward } from "react-icons/ai";
-
+import React from "react";
 const Users = () => {
     const navigate = useNavigate()
     const [loading, setLoading] = useState(true)
@@ -20,9 +20,6 @@ useEffect(()=> {
     setLoading(false)
 }, [])
 
-const toReviews = (event) => {
-    navigate("/reviews");
-};
 
 if(loading) return <h2>loading...</h2>
 else{

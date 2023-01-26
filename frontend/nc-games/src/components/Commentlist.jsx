@@ -6,7 +6,7 @@ import {AiOutlineEnter} from "react-icons/ai";
 import { CiFaceMeh } from "react-icons/ci";
 import { getComments, getAllComments, postComment, removeComment } from "../api";
 import {useNavigate, useParams} from "react-router-dom";
-import Button from 'react-bootstrap/Button';
+
 const currentUrl = new URL(window.location.href);
 
     const Commentlist = ()=>{

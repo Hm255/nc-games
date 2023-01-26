@@ -16,7 +16,7 @@ const currentUrl = new URL(window.location.href);
     const [loading, setLoading] = useState(true);
     const [order, setOrder] = useState('desc');     //sets the order
     const [sort, setSort] = useState('created_at'); //sets the sorted variable
-    const [err, setErr] = useState(null)
+    const [error, setError] = useState(null)
     const [errFix, setErrFix] = useState (null)
     const [errMsg, setErrMsg] = useState(null);
     const [Category, setCategory] = useState('');   //sets the category
@@ -39,11 +39,14 @@ const currentUrl = new URL(window.location.href);
     useEffect(()=>{ 
         getReviews(sort, order, Category)
         .then((data) => {
-          if(!data.ok){
+          console.table(data.reviews)
+          if(data === undefined){
+            setError(404)
+              setErrMsg('reviews dont exist')
+              setErrFix('search for existing reviews')
             console.table(data)
           }
             setReviews(data.reviews); 
-            console.table(data.reviews)
             console.log([Category, order, sort])
               currentUrl.searchParams.set('sortedBy', sort);
               currentUrl.searchParams.set('orderedBy', order);
@@ -54,12 +57,11 @@ const currentUrl = new URL(window.location.href);
 })
 .catch((err) => {
   console.log(err)
-  setErr(err)
   setLoading(false)
 })  
     }, [order, sort, Category]);  
-  if(err) return <h2>{err}</h2>
-  if(reviews === undefined) return <h2>no review here</h2>
+    if(error) return <ul>{<h2 className="errorMessage">{error}: {errMsg}, <br></br>fix: {errFix}</h2>}</ul>
+  if(reviews === undefined) return <div className='hardErrMsg'><h2> 404: found no reviews, make sure url params are correct as shown below:<p>('?sortedBy=created_at&orderedBy=desc&category=')</p></h2></div>
  if(loading) return <h2>loading...</h2>
 else{
 return <ul>

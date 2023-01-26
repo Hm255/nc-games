@@ -16,7 +16,7 @@ my current pkg.json dependencies
     "axios": "^1.2.1",
     "dropdown": "^0.2.0",
     "libpq": "^1.8.12",
-    "node": "^19.2.0",
+    "node": "^19.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.2",
@@ -49,3 +49,19 @@ https://react-icons.github.io/react-icons/icons?name=bs
 
 ### there will be error handling added
 
+## possibly handy tips
+
+if you get: 
+Error: error:0308010C:digital envelope routines::unsupported
+
+run this in the terminal (macOS/linux)(Windows Git Bash)-
+export NODE_OPTIONS=--openssl-legacy-provider
+
+Windows command prompt-
+set NODE_OPTIONS=--openssl-legacy-provider
+
+
+Windows PowerShell-
+$env:NODE_OPTIONS = "--openssl-legacy-provider"
+
+you may also have to alter your code slightly for the website to work again

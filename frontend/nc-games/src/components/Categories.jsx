@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import {useNavigate, Link} from "react-router-dom";
 import * as api from "../api";
 export default function Categories() {
   const [categories, setCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [err, setErr] = useState('')
-  const navigate = useNavigate();
+ 
   
   useEffect(() => {
     api.getCategories().then(({ categories }) => {
