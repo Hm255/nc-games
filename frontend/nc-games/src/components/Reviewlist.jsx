@@ -1,12 +1,13 @@
 import * as React from 'react';
 import {useState, useEffect, useContext} from "react";
 import { getReviews } from "../api";
-import {Link, useNavigate} from "react-router-dom";
+import {Link, useNavigate, useParams, useSearchParams} from "react-router-dom";
 import Sortby from './Sortby';
 import Orderby from './Orderby';
 import CategorySort from './CategorySort';
 import { UserContext } from "./UserContext";
 import { AiFillFastBackward, AiOutlineUserSwitch } from "react-icons/ai";
+import { CategoryContext } from './CategoryContext';
 
 const currentUrl = new URL(window.location.href);
 
@@ -19,8 +20,11 @@ const currentUrl = new URL(window.location.href);
     const [error, setError] = useState(null)
     const [errFix, setErrFix] = useState (null)
     const [errMsg, setErrMsg] = useState(null);
-    const [Category, setCategory] = useState('');   //sets the category
+    const [Category, setCategory] = useState('')//setting useContext here causes maximum call stack size exceeded error due to infinite re-rendering
+    //const {Category, setCategory} = useContext(CategoryContext) //currently gives undefined category and locks category
     const navigate = useNavigate();
+    console.log(Category, CategoryContext)
+    console.log(user, UserContext)
 //set queries to only be what can be selected
     const handleSortChange = (newValue) => { 
       setSort(newValue);
@@ -35,11 +39,10 @@ const currentUrl = new URL(window.location.href);
         console.log(review_id)
         navigate(`/reviews/${review_id}`)
       }
-
     useEffect(()=>{ 
         getReviews(sort, order, Category)
         .then((data) => {
-          console.table(data.reviews)
+          //console.table(data.reviews)
           if(data === undefined){
             setError(404)
               setErrMsg('reviews dont exist')

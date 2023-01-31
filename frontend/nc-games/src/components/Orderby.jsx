@@ -1,7 +1,7 @@
 import React from 'react';
 const Orderby = ({ onChange }) => {
 
-    const Order = [{ value: '', label: 'choose your option' },
+    const Order = [{ value: 'desc', label: 'choose your option' },
                      {value: 'asc', label: 'ascending order'}, //options for the dropdown
                     {value: 'desc', label: 'descending order'}
                 ];

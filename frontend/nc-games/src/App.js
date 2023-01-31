@@ -12,11 +12,17 @@ import Categories from "./components/Categories";
 import SingleReview from "./components/SingleReview";
 import React from 'react';
 import Commentlist from './components/Commentlist';
+import { CategoryContext } from './components/CategoryContext';
 
-function App() {
+function App (props) {
   const [user, setUser] = useState(); //username set here
   const [AllComments, setAllComments] = useState(getAllComments())
+  const [category, setCategory] = useState()//category set here
+    console.log(category, CategoryContext)
+    console.log(user, UserContext)
+  
   return (
+    <CategoryContext.Provider value={{category, setCategory}}>
     <UserContext.Provider value={{ user, setUser }}>
       <CommentContext.Provider value={{AllComments, setAllComments}}>
     <BrowserRouter>
@@ -34,6 +40,7 @@ function App() {
     </BrowserRouter>
     </CommentContext.Provider>
     </UserContext.Provider>
+    </CategoryContext.Provider>
   );
 }
 

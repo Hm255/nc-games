@@ -51,15 +51,16 @@ https://react-icons.github.io/react-icons/icons?name=bs
 
 ## possibly handy tips
 
-if you get: 
+if you get this when trying to run the application: 
 Error: error:0308010C:digital envelope routines::unsupported
 
-run this in the terminal (macOS/linux)(Windows Git Bash)-
+this is happening because your terminal's node version is unsupported (can be an issue on earlier and later versions) or the ssl isn't functioning.
+
+run this in the terminal to fix this error(macOS/linux)(Windows Git Bash)-
 export NODE_OPTIONS=--openssl-legacy-provider
 
 Windows command prompt-
 set NODE_OPTIONS=--openssl-legacy-provider
-
 
 Windows PowerShell-
 $env:NODE_OPTIONS = "--openssl-legacy-provider"

@@ -14,8 +14,7 @@ useEffect(()=> {
     getUsers()
     .then((allUsers)=>{
         setUsers(allUsers.users)
-        console.table(allUsers.users)
-        console.log()
+        console.log(UserContext)
     })
     setLoading(false)
 }, [])

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { getReview } from "../api";
-import { useParams, Link } from "react-router-dom";
+import { useParams, useSearchParams, Link } from "react-router-dom";
 import {AiFillCaretLeft, AiFillFastBackward, AiOutlineUserSwitch} from "react-icons/ai";
 import ErrorPage from "./ErrorPage";
 import { UserContext } from "./UserContext";

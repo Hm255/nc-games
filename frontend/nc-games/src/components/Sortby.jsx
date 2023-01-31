@@ -2,7 +2,7 @@ import React from 'react';
 const Sortby = ({ onChange }) => {
 
     const Sort = [ //options for the dropdown
-        { value: '', label: 'choose your option' },
+        { value: 'review_id', label: 'choose your option' },
         { value: 'review_id', label: 'Review ID' },
         { value: 'Votes', label: 'Vote count' },
         { value: 'created_at', label: 'recent' },

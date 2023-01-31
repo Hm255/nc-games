@@ -1,5 +1,9 @@
 import React from 'react';
+import { useContext } from 'react';
+import { CategoryContext } from './CategoryContext';
+
 const CategorySort = ({ onChange }) => {
+  
     const Categories = [{ value: '', label: 'choose your option' },
                     {value: 'strategy', label: 'Strategy'}, //options for the dropdown
                     {value: 'hidden-roles', label: 'hidden roles'},
@@ -14,7 +18,8 @@ const CategorySort = ({ onChange }) => {
       ));
 
     const handleChange = (event) => {
-            onChange(event.target.value)
+      
+          onChange(event.target.value)
         }
       return (
         <div className="categoryButton">
