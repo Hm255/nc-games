@@ -2,7 +2,7 @@
 .App {
   text-align: center;
   background: linear-gradient(180deg, #04fafd, 5%, #119dff, 50%, navy);
-
+  list-style-type: none;
 }
 
 .App-logo {
@@ -52,11 +52,12 @@
 .reviews{
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: mediumturquoise;
-  width: 25%;
+  width: 33%;
   border-radius: 1rem;
   border-style: solid;
   margin: auto;
   margin-top: 1%;
+  list-style-type: none;
    /* background-image: url('https://stsci-opo.org/STScI-01G8GZQ3ZFJRD8YF8YZWMAXCE3.png'); space background */
 }
 .votes{
@@ -88,21 +89,23 @@
 .categories{
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: mediumturquoise;
-  width: 25%;
+  width: 40%;
   border-radius: 1rem;
   border-style: solid;
   margin: auto;
   margin-top: 1%;
+  list-style-type: none;
 }
 
 .review{
   animation: 4s linear infinite;
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: mediumturquoise;
-  width: 25%;
+  width: 60%;
   border-radius: 1rem;
   border-style: solid;
   margin: auto;
+  list-style-type: none;
 }
 
 img{
@@ -158,6 +161,7 @@ font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 margin-left: 37.5%;
 margin-right: 40.5%;
 margin-top: 1%;
+list-style-type: none;
 }
 .commentBox{
   margin-right: 3%;
@@ -167,10 +171,9 @@ margin-top: 1%;
 }
 .noComments{
   scale: 200%;
+  background-color: gold;
 }
-.errorMessage{
-  scale: 100%;
-}
+
 .user{
   text-align: center;
 border-radius: 1rem;
@@ -180,6 +183,7 @@ font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 margin-left: 37.5%;
 margin-right: 40.5%;
 margin-top: 1%;
+list-style-type: none;
 }
 .username{
   margin-left: 600px;
@@ -343,6 +347,36 @@ div .dot {
   word-spacing: 2px;
   color: #119dff;
   font-size: 20px;
+  font-weight: 888;
+  text-transform: uppercase;
+}
+.reviewTitle{
+scale: 100%;
+}
+.reviewOwner{
+  scale: 100%;
+}
+.reviewDate{
+  scale: 100%;
+}
+.reviewCategory{
+  scale: 100%;
+}
+.reviewDesigner{
+  scale: 100%;
+}
+.reviewBody{
+  scale: 100%;
+}
+.error{
+  height: 850px;
+  background: linear-gradient(180deg, #04fafd, 5%, #119dff, 50%, navy);
+  text-transform: uppercase; 
+  font-family: sans-serif;
+  letter-spacing: 1px;
+  word-spacing: 2px;
+  color: #fff;
+  font-size: 40px;
   font-weight: 888;
   text-transform: uppercase;
 }

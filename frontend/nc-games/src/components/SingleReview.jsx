@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { getReview } from "../api";
-import { useParams, useSearchParams, Link } from "react-router-dom";
+import { useParams, useSearchParams, Link, useNavigate} from "react-router-dom";
 import {AiFillCaretLeft, AiFillFastBackward, AiOutlineUserSwitch} from "react-icons/ai";
 import ErrorPage from "./ErrorPage";
 import { UserContext } from "./UserContext";
@@ -15,7 +15,7 @@ export default function SingleReview(props) {
     const { user } = useContext(UserContext); 
     const [errFix, setErrFix] = useState (null)
     const [loading, setLoading] = useState(true);
-
+    const navigate = useNavigate()
     useEffect(()=>{ 
         getReview(review_id)
         .then((reviewFromApi) => {//for error handling, take the return obj and check if it is ok, if not then it will return its given errors defined in the frontend api
@@ -41,7 +41,11 @@ setLoading(false)
     }, [review_id, error]);
 
     if(loading) return <h2>loading...</h2>//loading message
-    if(error) return <ul>{<h2 className="errorMessage">{error}: {errMsg}, <br></br>fix: {errFix}</h2>}</ul>
+    if(error) navigate(`/${error}`);
+        {/* <div>
+        {error && <ErrorPage errorMessage={`${error}: ${errMsg}, ${errFix}`} />}
+        </div> */}
+    
     //set loading to false at the end of all useEffects, then add functionality in between setLoadings.
     return <ul>
         <h2 className="username">{user}</h2>
@@ -52,26 +56,32 @@ setLoading(false)
         {<li className="review" key={review['review_id']}> 
     <div className="wrapper">
      <br></br>
-     <p className="title">Title:</p>{review.title}
+     <p className="title">Title:</p>
+     <p classname="reviewTitle">{review.title}</p>
      <br></br>
-     <p className="owner">Owner:</p>{review.owner}
+     <p className="owner">Owner:</p>
+     <p className="reviewOwner">{review.owner}</p>
      <br></br>
-     <p className="uploaded">Uploaded:</p>{review.created_at}
+     <p className="uploaded">Uploaded:</p>
+     <p className="reviewDate">{review.created_at}</p>
      <br></br>
-     <p className="category">Category:</p>{review.category}
+     <p className="category">Category:</p>
+     <p className="reviewCategory">{review.category}</p>
      <br></br>
-     <p className="designer">Designer:</p>{review.designer}
+     <p className="designer">Designer:</p>
+     <p className="reviewDesigner">{review.designer}</p>
      <br></br>
      <p className="image">Image:</p><img src={review.review_img_url} className="img" alt="img"></img>
      <br></br>
-     <p className="revBody">Body:</p>{review.review_body}
+     <p className="revBody">Body:</p>
+     <p className="reviewBody">{review.review_body}</p>
      <br></br>
-     <p className="votes">Votes:</p>{review.votes}
+     <p className="votes">Votes:</p>
+     <p className="reviewVotes">{review.votes}</p>
      <br></br>
      </div>
      </li>
      }
-     <ErrorPage />
      <Commentlist />
      </ul>
  }

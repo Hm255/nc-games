@@ -28,12 +28,12 @@ function App (props) {
     <BrowserRouter>
     <div className="App">
           <Routes>
-            <Route path="*" element={<ErrorPage />} />
             <Route path="/" element={<Welcome />} />
             <Route path="/reviews" element={<Reviewlist />} />
             <Route path="/Categories" element={<Categories />} />
             <Route path="/users" element={<Users />} />
             <Route path="/reviews/:review_id" element={<SingleReview />}/>
+            <Route path="*" element={<ErrorPage />} />
             <Route path="/reviews/:review_id/:comment" element={<Commentlist />}/>
           </Routes>
     </div>

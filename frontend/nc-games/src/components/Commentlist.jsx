@@ -30,10 +30,12 @@ const currentUrl = new URL(window.location.href);
     useEffect(()=>{ //gets and post comments
         getComments(review_id)
         .then((data) => {
+          if(data){
             setComments(data.comment);
             console.table(data.comment); 
             navigate(currentUrl.search);
             setLoading(false);
+          }
 })
 getAllComments().then((res) => {
   setAllComments(res.comments);
@@ -42,6 +44,7 @@ getAllComments().then((res) => {
   console.log(err)
   setErr(err)
 })
+
 if(posting){ 
       postComment(review_id, comment)
       .then((res)=> {
@@ -71,6 +74,10 @@ if(posting){
       removeComment(comment_id)
       .then((res)=> {
         console.log("deleted", res)
+        getComments(review_id)
+        .then((data)=> {
+          setComments(data.comment)
+        })
         setDeleting(false)
       })
         .catch((err) => {console.log(err)
@@ -102,6 +109,18 @@ return <ul>
 }
 else {
 return <ul>
+  <form>
+        <input
+          type="text"
+          placeholder='Comment here!'
+          className="commentBox"
+          value={newComment}
+          onChange={handleCommentChange}
+        />
+        <br>
+        </br>
+       {newComment === '' ? (<p className="commentValidation">please be logged in and enter a comment before posting</p>):(<button type="submit" disabled={!user} className="submitButton" onClick={(event) => setPosting(true)}><AiOutlineEnter /></button>)} 
+      </form>
 {comments.map((comment) => {
 return <li className="comments" key={comment['comment_id']}> 
 <div className = "comment">
@@ -124,17 +143,6 @@ DeletePost(event, comment.comment_id)}><ImBin /></button>): ( //if the user matc
 </li> 
 })
 }
-<form>
-        <input
-          type="text"
-          className="commentBox"
-          value={newComment}
-          onChange={handleCommentChange}
-        />
-        <br>
-        </br>
-       {newComment === '' ? (<p className="commentValidation">please be logged in and enter a comment before posting</p>):(<button type="submit" disabled={!user} className="submitButton" onClick={(event) => setPosting(true)}><AiOutlineEnter /></button>)} 
-      </form>
 </ul>
 }
 }
