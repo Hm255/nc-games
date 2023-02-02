@@ -41,10 +41,11 @@ setLoading(false)
     }, [review_id, error]);
 
     if(loading) return <h2>loading...</h2>//loading message
-    if(error) navigate(`/${error}`);
-        {/* <div>
+    if(error) return <ul>
+        <div>
         {error && <ErrorPage errorMessage={`${error}: ${errMsg}, ${errFix}`} />}
-        </div> */}
+        </div>
+        </ul>
     
     //set loading to false at the end of all useEffects, then add functionality in between setLoadings.
     return <ul>
