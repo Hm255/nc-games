@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useState, useEffect, useContext} from "react";
 import { getReviews } from "../api";
-import {Link, useNavigate, useParams, useSearchParams} from "react-router-dom";
+import {Link, useNavigate, useParams, useSearchParams, useLocation} from "react-router-dom";
 import Sortby from './Sortby';
 import Orderby from './Orderby';
 import CategorySort from './CategorySort';
@@ -14,13 +14,14 @@ const currentUrl = new URL(window.location.href);
     const Reviewlist = (props)=>{
     const [reviews, setReviews] = useState([]); 
     const { user } = useContext(UserContext); 
+    const {category} = useContext(CategoryContext);
     const [loading, setLoading] = useState(true);
     const [order, setOrder] = useState('desc');     //sets the order
     const [sort, setSort] = useState('created_at'); //sets the sorted variable
     const [error, setError] = useState(null)
     const [errFix, setErrFix] = useState (null)
     const [errMsg, setErrMsg] = useState(null);
-    const [Category, setCategory] = useState('')//setting useContext here causes maximum call stack size exceeded error due to infinite re-rendering
+    const [Category, setCategory] = useState(category)//setting useContext here causes maximum call stack size exceeded error due to infinite re-rendering
     //const {Category, setCategory} = useContext(CategoryContext) //currently gives undefined category and locks category
     const navigate = useNavigate();
     console.log(Category, CategoryContext)
