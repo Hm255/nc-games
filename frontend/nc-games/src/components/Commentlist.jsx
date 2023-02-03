@@ -131,7 +131,7 @@ return <li className="comments" key={comment['comment_id']}>
 <br></br>
 <p className="commentVotes">Votes:</p>{comment.votes}
 <br></br>
-<p className="comment-created-at">Made:</p>{comment.created_at}
+<p className="comment-created-at">Made:</p>{new Date(comment.created_at).toString()}
 <br></br>
 {comment.author===user ? ( //if we own the comment
 <button disabled={deleting} //you can only click to set deleting once

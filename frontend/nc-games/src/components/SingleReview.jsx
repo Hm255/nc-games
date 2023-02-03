@@ -64,7 +64,7 @@ setLoading(false)
      <p className="reviewOwner">{review.owner}</p>
      <br></br>
      <p className="uploaded">Uploaded:</p>
-     <p className="reviewDate">{review.created_at}</p>
+     <p className="reviewDate">{new Date((review.created_at)).toString()}</p>
      <br></br>
      <p className="category">Category:</p>
      <p className="reviewCategory">{review.category}</p>

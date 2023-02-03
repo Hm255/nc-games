@@ -8,7 +8,6 @@ export default function Categories(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [err, setErr] = useState('')
   const {category, setCategory} = useContext(CategoryContext);
-  //const [category, setCategory] = useState('')
   const navigate = useNavigate()
   console.log(CategoryContext)
 

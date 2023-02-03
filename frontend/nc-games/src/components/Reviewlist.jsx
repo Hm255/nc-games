@@ -22,7 +22,7 @@ const currentUrl = new URL(window.location.href);
     const [errFix, setErrFix] = useState (null)
     const [errMsg, setErrMsg] = useState(null);
     const [Category, setCategory] = useState(category)//setting useContext here causes maximum call stack size exceeded error due to infinite re-rendering
-    //const {Category, setCategory} = useContext(CategoryContext) //currently gives undefined category and locks category
+    
     const navigate = useNavigate();
     console.log(Category, CategoryContext)
     console.log(user, UserContext)
