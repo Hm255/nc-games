@@ -65,4 +65,6 @@ set NODE_OPTIONS=--openssl-legacy-provider
 Windows PowerShell-
 $env:NODE_OPTIONS = "--openssl-legacy-provider"
 
-you may also have to alter your code slightly for the website to work again
+you may also have to alter your code slightly after running the above command prompts for the website to work again
+
+also place redirects in the main route outside public if error handling refuses to work

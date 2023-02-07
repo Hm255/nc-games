@@ -17,7 +17,7 @@ import { CategoryContext } from './components/CategoryContext';
 function App (props) {
   const [user, setUser] = useState(); //username set here
   const [AllComments, setAllComments] = useState(getAllComments())
-  const [category, setCategory] = useState()//category set here
+  const [category, setCategory] = useState('')//category set here
     console.log(category, CategoryContext)
     console.log(user, UserContext)
   

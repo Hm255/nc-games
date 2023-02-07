@@ -6,6 +6,7 @@ import Sortby from './Sortby';
 import Orderby from './Orderby';
 import CategorySort from './CategorySort';
 import { UserContext } from "./UserContext";
+import { BiCategory } from "react-icons/bi";
 import { AiFillFastBackward, AiOutlineUserSwitch } from "react-icons/ai";
 import { CategoryContext } from './CategoryContext';
 
@@ -73,6 +74,9 @@ return <ul>
   <h2 className='username'>{user}</h2>
   <Link to={`/`}>
        <p>back to home</p> <AiFillFastBackward />
+        </Link>
+        <Link to={`/categories`}>
+       <p>select category</p> <BiCategory />
         </Link>
         <Link to={`/users`}>
        <p>change user</p> <AiOutlineUserSwitch />

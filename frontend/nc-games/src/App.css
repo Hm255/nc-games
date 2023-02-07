@@ -101,7 +101,7 @@
   animation: 4s linear infinite;
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: mediumturquoise;
-  width: 60%;
+  width: 66.6%;
   border-radius: 1rem;
   border-style: solid;
   margin: auto;
@@ -358,7 +358,6 @@ scale: 100%;
 }
 .reviewDate{
   scale: 100%;
-  
 }
 .reviewCategory{
   scale: 100%;
