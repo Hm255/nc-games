@@ -42,7 +42,7 @@ setLoading(false)
 
     if(loading) return <h2>loading...</h2>//loading message
     if(error) return <ul>
-        <div>
+        <div classname="error">
         {error && <ErrorPage errorMessage={`${error}: ${errMsg}, ${errFix}`} />}
         </div>
         </ul>

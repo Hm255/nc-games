@@ -65,7 +65,7 @@ const currentUrl = new URL(window.location.href);
   setLoading(false)
 })  
     }, [order, sort, Category]);  
-    if(error) return <ul>{<h2 className="errorMessage">{error}: {errMsg}, <br></br>fix: {errFix}</h2>}</ul>
+    if(error) return <ul>{<h2 className="errorTitle">{error}: {errMsg}, <br></br>fix: {errFix}</h2>}</ul>
   if(reviews === undefined) return <div className='hardErrMsg'><h2> 404: found no reviews, make sure url params are correct as shown below:<p>('?sortedBy=created_at&orderedBy=desc&category=')</p></h2></div>
  if(loading) return <h2>loading...</h2>
 else{

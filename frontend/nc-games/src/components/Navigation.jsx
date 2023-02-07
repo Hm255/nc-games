@@ -20,7 +20,6 @@ export default function Navigation () {
         navigate("/users");
     };
 
-
     return (
     <div className="welcomePage">
         <div className='wrapper'>
