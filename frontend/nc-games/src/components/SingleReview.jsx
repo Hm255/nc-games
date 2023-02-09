@@ -74,7 +74,7 @@ setLoading(false)
      <br></br>
      <p className="image">Image:</p><img src={review.review_img_url} className="img" alt="img"></img>
      <br></br>
-     <p className="revBody">Body:</p>
+     <p className="revBody">Description:</p>
      <p className="reviewBody">{review.review_body}</p>
      <br></br>
      <p className="votes">Votes:</p>
