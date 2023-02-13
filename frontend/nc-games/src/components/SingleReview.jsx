@@ -3,6 +3,7 @@ import { getReview } from "../api";
 import { useParams, useSearchParams, Link, useNavigate} from "react-router-dom";
 import {AiFillCaretLeft, AiFillFastBackward, AiOutlineUserSwitch} from "react-icons/ai";
 import ErrorPage from "./ErrorPage";
+import { BiDislike, BiLike } from "react-icons/bi";
 import { UserContext } from "./UserContext";
 import Commentlist from "./Commentlist" //this is empty before singleReview fully renders
 
@@ -15,11 +16,13 @@ export default function SingleReview(props) {
     const { user } = useContext(UserContext); 
     const [errFix, setErrFix] = useState (null)
     const [loading, setLoading] = useState(true);
+    const [votes, setVotes] = useState(review.votes)
     const navigate = useNavigate()
     useEffect(()=>{ 
         getReview(review_id)
         .then((reviewFromApi) => {//for error handling, take the return obj and check if it is ok, if not then it will return its given errors defined in the frontend api
             setReview(reviewFromApi)
+            console.log(reviewFromApi.votes)
             if(!reviewFromApi.ok){
                 console.table(reviewFromApi.props.children)
                 setError(reviewFromApi.props.children[1])
@@ -52,10 +55,10 @@ setLoading(false)
         <h2 className="username">{user}</h2>
        <nav className="Links"><Link to={`/reviews`}> <p>Back to reviews</p> <AiFillCaretLeft /></Link>
             <Link to={`/`}>        <p>back to home</p> <AiFillFastBackward /></Link> 
-            <Link to={`/users`}>   <p>change user</p> <AiOutlineUserSwitch /></Link></nav> 
-        
+            <Link to={`/users`}>   <p>change user</p> <AiOutlineUserSwitch /></Link>
+            </nav> 
         {<li className="review" key={review['review_id']}> 
-    <div className="wrapper">
+    <div>
      <br></br>
      <p className="title">Title:</p>
      <p classname="reviewTitle">{review.title}</p>
@@ -79,8 +82,13 @@ setLoading(false)
      <br></br>
      <p className="votes">Votes:</p>
      <p className="reviewVotes">{review.votes}</p>
-     <br></br>
+     <div>{user ? (<button className="Like" onClick={(event, votes) => setVotes(votes+=1)}><BiLike /></button>
+     ):('')}
+          {user ? (<button className="Dislike" onClick={(event, votes) => setVotes(votes-=1)}><BiDislike /></button>
+     ):('')}</div>
      </div>
+     
+     <br></br>
      </li>
      }
      <Commentlist />
