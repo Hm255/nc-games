@@ -1,6 +1,6 @@
 # Board games review front-end
 
-this will walk you through on how to use this webiste
+this will walk you through on how to use this website
 
 ## prerequisites
 
@@ -31,7 +31,7 @@ earliest node version compatibility: v18.12.1
 ## hosted backend: https://nc-game.cyclic.app/api
 ## Backend github repository: https://github.com/Hm255/Backend-Host
 
-### /Reviewlist: 
+### /reviews: 
 
 Contains all reviews created, this page has query string filters which can filter out unselected categories, order by a numerable metric such as comment/vote count in ascending or descending order. Each review can be read by clicking the book symbol at the top of the screen. 
 

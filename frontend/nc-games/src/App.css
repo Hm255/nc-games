@@ -149,9 +149,7 @@ img{
 .OrderBy{
   text-align: center;
 }
-.optionsbutton{
-  text-align: center;
-}
+
 .comment{
 text-align: center;
 border-radius: 1rem;
@@ -300,7 +298,7 @@ div .dot {
   }
 }
 .welcomePage{
-  height: 850px;
+  height: 100vw;
   background: linear-gradient(180deg, #04fafd, 5%, #119dff, 50%, navy);
 }
 .commentValidation{

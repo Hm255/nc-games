@@ -1,22 +1,33 @@
 import React, { useEffect, useState, useContext } from "react";
-import { getReview } from "../api";
+import { getReview, editReview } from "../api";
 import { useParams, useSearchParams, Link, useNavigate} from "react-router-dom";
-import {AiFillCaretLeft, AiFillFastBackward, AiOutlineUserSwitch} from "react-icons/ai";
+import {AiFillCaretLeft, AiFillFastBackward, AiOutlineUserSwitch, AiFillLike, AiFillDislike} from "react-icons/ai";
 import ErrorPage from "./ErrorPage";
 import { BiDislike, BiLike } from "react-icons/bi";
 import { UserContext } from "./UserContext";
 import Commentlist from "./Commentlist" //this is empty before singleReview fully renders
+import { LikeContext } from "./LikeContext";
+import { DislikeContext } from "./DislikeContext";
 
+let voteInc = 1;
 
 export default function SingleReview(props) {
     const {review_id} = useParams()
     const [review, setReview] = useState({});
     const [error, setError] = useState(null)                  //for displaying errors
     const [errMsg, setErrMsg] = useState(null);
-    const { user } = useContext(UserContext); 
+    const { user } = useContext(UserContext);
     const [errFix, setErrFix] = useState (null)
     const [loading, setLoading] = useState(true);
     const [votes, setVotes] = useState(review.votes)
+    // const {Liked, setLiked} = useContext(LikeContext)
+    // const {Disliked, setDisliked} = useContext(DislikeContext)
+    const [Like, setLike] = useState(false)
+    const [Dislike, setDislike] = useState(false)
+
+    // const voteInc = { inc_votes : 1 }
+    // const voteDec = { inc_votes : -1 }
+
     const navigate = useNavigate()
     useEffect(()=>{ 
         getReview(review_id)
@@ -31,7 +42,7 @@ export default function SingleReview(props) {
                     setErrFix('only numbers are valid in the url')
                 }
                 else if(error === 404){ 
-                    setErrMsg('review doesnt exist')
+                    setErrMsg('review does not exist')
                     setErrFix('search for an existing review')
                 }
             }
@@ -43,9 +54,20 @@ export default function SingleReview(props) {
 setLoading(false)
     }, [review_id, error]);
 
+    // const incrementVotes = (increment) => {
+    //     setVotes((votes) => {
+    //       return review.votes + increment;
+    //     });
+    //   };
+      if(Like){
+        editReview(voteInc = {inc_votes: 1}, review_id)
+      }
+      else if(Dislike){
+        editReview(voteInc = {inc_votes: -1}, review_id)
+      }
     if(loading) return <h2>loading...</h2>//loading message
     if(error) return <ul>
-        <div classname="error">
+        <div className="error">
         {error && <ErrorPage errorMessage={`${error}: ${errMsg}, ${errFix}`} />}
         </div>
         </ul>
@@ -61,7 +83,7 @@ setLoading(false)
     <div>
      <br></br>
      <p className="title">Title:</p>
-     <p classname="reviewTitle">{review.title}</p>
+     <p className="reviewTitle">{review.title}</p>
      <br></br>
      <p className="owner">Owner:</p>
      <p className="reviewOwner">{review.owner}</p>
@@ -82,10 +104,15 @@ setLoading(false)
      <br></br>
      <p className="votes">Votes:</p>
      <p className="reviewVotes">{review.votes}</p>
-     <div>{user ? (<button className="Like" onClick={(event, votes) => setVotes(votes+=1)}><BiLike /></button>
+     <div>{user && !Dislike && !Like? (<button className="Like" onClick={() => setLike(!Like)}><BiLike /></button>
      ):('')}
-          {user ? (<button className="Dislike" onClick={(event, votes) => setVotes(votes-=1)}><BiDislike /></button>
-     ):('')}</div>
+     {user && Like? (<button className="Liked" onClick={() => setLike(!Like)}><AiFillLike />Liked!</button>
+     ):('')}
+          {user && !Like && !Dislike? (<button className="Dislike" onClick={() => setDislike(!Dislike)}><BiDislike /></button>
+     ):('')}
+     {user && Dislike? (<button className="Disliked" onClick={() => setDislike(!Dislike)}><AiFillDislike />Disliked!</button>
+     ):('')}
+     </div>
      </div>
      
      <br></br>
