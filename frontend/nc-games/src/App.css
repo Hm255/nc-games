@@ -298,7 +298,7 @@ div .dot {
   }
 }
 .welcomePage{
-  height: 100vw;
+  height: 100vh;
   background: linear-gradient(180deg, #04fafd, 5%, #119dff, 50%, navy);
 }
 .commentValidation{

@@ -62,7 +62,7 @@ if(posting){
       })
       setNewComment('');
         }
-    }, [review_id, posting]); 
+    }, [review_id, posting]);
 
     const handleCommentChange = (event) => { //sets the value of whats in the comment body to what's typed into the box
         setNewComment(event.target.value);

@@ -73,8 +73,14 @@ export const getComments = (review_id) => {
 }
 
 export const editReview = (inc_votes, id) => {
-    return api.put(`/reviews/${id}`).then((res) => {
+    return api.patch(`/reviews/${id}`, inc_votes).then((res) => {
+        console.log(res.request['responseURL'], 'no error')
+        console.log(res)
         return res.data;
+    })
+    .then((err)=> {
+        console.log(err, 'error')
+        return err;
     })
 }
 

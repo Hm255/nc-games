@@ -54,18 +54,65 @@ export default function SingleReview(props) {
 setLoading(false)
     }, [review_id, error]);
 
-    // const incrementVotes = (increment) => {
-    //     setVotes((votes) => {
-    //       return review.votes + increment;
-    //     });
-    //   };
-      if(Like){
-        editReview(voteInc = {inc_votes: 1}, review_id)
-      }
-      else if(Dislike){
-        editReview(voteInc = {inc_votes: -1}, review_id)
-      }
+        const LikeButton = (event) => {
+            if(Like === false){
+            event.preventDefault();
+            editReview({inc_votes: 1}, review_id)
+            .then((res)=>{
+            console.log('liked')
+            })
+            getReview(review_id)
+            .then((data)=>{
+                console.log(Like)
+            setReview(data)
+            console.log(data.votes)
+            setLike(!Like)
+            })
+        }
+           else if(Like === true){
+            event.preventDefault();
+                editReview({inc_votes: -1}, review_id)
+                .then((res)=>{
+                 console.log('like removed')
+                })
+            getReview(review_id)
+            .then((data)=>{
+                console.log(Like)
+            setReview(data)
+            console.log(data.votes)
+            setLike(!Like)
+            })
+            }
+        }
+        const DislikeButton = (event, review_id) => {
+            event.preventDefault();
+            setDislike(!Dislike)
+            editReview({inc_votes: -1}, review_id)
+            .then((res)=>{
+            console.log('disliked')
+            })
+            getReview(review_id)
+            .then((data)=>{
+                console.log(data)
+            setReview(data.review)
+            })
+            if(Dislike){
+                editReview({inc_votes: 1}, review_id)
+                .then((res)=>{
+                 console.log('dislike removed')
+                })
+            getReview(review_id)
+            .then((data)=>{
+                console.log(data)
+            setReview(data.review)
+            setDislike(!Dislike)
+            })
+            }
+        }
     if(loading) return <h2>loading...</h2>//loading message
+    if (review.votes === null) {
+        review.votes = 1;
+      }
     if(error) return <ul>
         <div className="error">
         {error && <ErrorPage errorMessage={`${error}: ${errMsg}, ${errFix}`} />}
@@ -104,9 +151,10 @@ setLoading(false)
      <br></br>
      <p className="votes">Votes:</p>
      <p className="reviewVotes">{review.votes}</p>
-     <div>{user && !Dislike && !Like? (<button className="Like" onClick={() => setLike(!Like)}><BiLike /></button>
+
+     <div>{user && !Dislike && !Like? (<button className="Like" onClick={LikeButton}><BiLike /></button>
      ):('')}
-     {user && Like? (<button className="Liked" onClick={() => setLike(!Like)}><AiFillLike />Liked!</button>
+     {user && Like? (<button className="Liked" onClick={LikeButton}><AiFillLike />Liked!</button>
      ):('')}
           {user && !Like && !Dislike? (<button className="Dislike" onClick={() => setDislike(!Dislike)}><BiDislike /></button>
      ):('')}
@@ -114,7 +162,6 @@ setLoading(false)
      ):('')}
      </div>
      </div>
-     
      <br></br>
      </li>
      }
