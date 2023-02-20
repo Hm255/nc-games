@@ -67,7 +67,7 @@ if(posting){
     const handleCommentChange = (event) => { //sets the value of whats in the comment body to what's typed into the box
         setNewComment(event.target.value);
       };
-               
+
     const DeletePost = (event, comment_id) => { //button for deleting posts
       event.preventDefault();
       setDeleting(true)
@@ -119,7 +119,7 @@ return <ul>
         />
         <br>
         </br>
-       {newComment === '' ? (<p className="commentValidation">please be logged in and enter a comment before posting</p>):(<button type="submit" disabled={!user} className="submitButton" onClick={(event) => setPosting(true)}><AiOutlineEnter /></button>)} 
+       {newComment === '' ? (<p className="commentValidation">please enter a comment before posting</p>):(<button type="submit" disabled={!user} className="submitButton" onClick={(event) => setPosting(true)}><AiOutlineEnter /></button>)} 
       </form>
 {comments.map((comment) => {
 return <li className="comments" key={comment['comment_id']}> 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useCallback } from "react";
 import { getReview, editReview } from "../api";
 import { useParams, useSearchParams, Link, useNavigate} from "react-router-dom";
 import {AiFillCaretLeft, AiFillFastBackward, AiOutlineUserSwitch, AiFillLike, AiFillDislike} from "react-icons/ai";
@@ -9,8 +9,6 @@ import Commentlist from "./Commentlist" //this is empty before singleReview full
 import { LikeContext } from "./LikeContext";
 import { DislikeContext } from "./DislikeContext";
 
-let voteInc = 1;
-
 export default function SingleReview(props) {
     const {review_id} = useParams()
     const [review, setReview] = useState({});
@@ -20,20 +18,16 @@ export default function SingleReview(props) {
     const [errFix, setErrFix] = useState (null)
     const [loading, setLoading] = useState(true);
     const [votes, setVotes] = useState(review.votes)
-    // const {Liked, setLiked} = useContext(LikeContext)
-    // const {Disliked, setDisliked} = useContext(DislikeContext)
-    const [Like, setLike] = useState(false)
-    const [Dislike, setDislike] = useState(false)
+    const [Like, setLike] = useState()
+    const [Dislike, setDislike] = useState()
 
-    // const voteInc = { inc_votes : 1 }
-    // const voteDec = { inc_votes : -1 }
 
     const navigate = useNavigate()
     useEffect(()=>{ 
         getReview(review_id)
         .then((reviewFromApi) => {//for error handling, take the return obj and check if it is ok, if not then it will return its given errors defined in the frontend api
             setReview(reviewFromApi)
-            console.log(reviewFromApi.votes)
+            console.log(reviewFromApi.votes, Like, Dislike)
             if(!reviewFromApi.ok){
                 console.table(reviewFromApi.props.children)
                 setError(reviewFromApi.props.children[1])
@@ -54,61 +48,71 @@ export default function SingleReview(props) {
 setLoading(false)
     }, [review_id, error]);
 
-        const LikeButton = (event) => {
-            if(Like === false){
+        const LikeButton = useCallback((event) => {
+            if(Like === undefined){
+                setLike(true)
+            }
+            if(Like !== true){ //this happens when Like is false before the button is pressed
             event.preventDefault();
             editReview({inc_votes: 1}, review_id)
             .then((res)=>{
-            console.log('liked')
-            })
+            console.log('liked', Like)
             getReview(review_id)
             .then((data)=>{
-                console.log(Like)
+                console.log(Like, data, 'liked')
             setReview(data)
-            console.log(data.votes)
             setLike(!Like)
+            })
             })
         }
            else if(Like === true){
             event.preventDefault();
                 editReview({inc_votes: -1}, review_id)
                 .then((res)=>{
-                 console.log('like removed')
+                 console.log(res, Like)
+                 getReview(review_id)
+                 .then((data)=>{
+                     console.log(Like, data, 'unliked')
+                 setReview(data)
+                 setLike(!Like)
+                 })
                 })
-            getReview(review_id)
-            .then((data)=>{
-                console.log(Like)
-            setReview(data)
-            console.log(data.votes)
-            setLike(!Like)
-            })
             }
-        }
-        const DislikeButton = (event, review_id) => {
+        }, [Like])
+
+        const DislikeButton = useCallback((event) => {
+            if(Dislike === undefined){
+                setDislike(true)
+            }
+            if(Dislike !== true){ //this happens when Like is false before the button is pressed
             event.preventDefault();
-            setDislike(!Dislike)
             editReview({inc_votes: -1}, review_id)
             .then((res)=>{
-            console.log('disliked')
-            })
+            console.log('disliked', Dislike)
             getReview(review_id)
             .then((data)=>{
-                console.log(data)
-            setReview(data.review)
-            })
-            if(Dislike){
-                editReview({inc_votes: 1}, review_id)
-                .then((res)=>{
-                 console.log('dislike removed')
-                })
-            getReview(review_id)
-            .then((data)=>{
-                console.log(data)
-            setReview(data.review)
+                console.log(Dislike, data, 'disliked')
+            setReview(data)
             setDislike(!Dislike)
             })
-            }
+            })
         }
+           else if(Dislike === true){
+            event.preventDefault();
+                editReview({inc_votes: 1}, review_id)
+                .then((res)=>{
+                 console.log(res, Dislike)
+                 getReview(review_id)
+                 .then((data)=>{
+                     console.log(Dislike, data, 'dislike removed')
+                 setReview(data)
+                 setDislike(!Dislike)
+                 })
+                })
+            }
+        }, [Dislike])
+
+        
     if(loading) return <h2>loading...</h2>//loading message
     if (review.votes === null) {
         review.votes = 1;
@@ -154,11 +158,13 @@ setLoading(false)
 
      <div>{user && !Dislike && !Like? (<button className="Like" onClick={LikeButton}><BiLike /></button>
      ):('')}
-     {user && Like? (<button className="Liked" onClick={LikeButton}><AiFillLike />Liked!</button>
+     {user && Like && !Dislike? (<button className="Liked" onClick={LikeButton}><AiFillLike />Liked!</button>
      ):('')}
-          {user && !Like && !Dislike? (<button className="Dislike" onClick={() => setDislike(!Dislike)}><BiDislike /></button>
+          {user && !Like && !Dislike? (<button className="Dislike" onClick={DislikeButton}><BiDislike /></button>
      ):('')}
-     {user && Dislike? (<button className="Disliked" onClick={() => setDislike(!Dislike)}><AiFillDislike />Disliked!</button>
+     {user && Dislike && !Like? (<button className="Disliked" onClick={DislikeButton}><AiFillDislike />Disliked!</button>
+     ):('')}
+     {!user ?( <div><hr></hr><p className ="">To Like and Comment please log in</p></div>
      ):('')}
      </div>
      </div>
