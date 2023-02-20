@@ -114,9 +114,6 @@ setLoading(false)
 
         
     if(loading) return <h2>loading...</h2>//loading message
-    if (review.votes === null) {
-        review.votes = 1;
-      }
     if(error) return <ul>
         <div className="error">
         {error && <ErrorPage errorMessage={`${error}: ${errMsg}, ${errFix}`} />}
