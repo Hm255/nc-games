@@ -50,6 +50,7 @@ setLoading(false)
 
         const LikeButton = useCallback((event) => {
             if(Like === undefined){
+               
                 setLike(true)
             }
             if(Like !== true){ //this happens when Like is false before the button is pressed
@@ -82,9 +83,10 @@ setLoading(false)
 
         const DislikeButton = useCallback((event) => {
             if(Dislike === undefined){
+                
                 setDislike(true)
             }
-            if(Dislike !== true){ //this happens when Like is false before the button is pressed
+            if(Dislike !== true){ //this happens when Like is false BEFORE the button is pressed
             event.preventDefault();
             editReview({inc_votes: -1}, review_id)
             .then((res)=>{
@@ -161,7 +163,7 @@ setLoading(false)
      ):('')}
      {user && Dislike && !Like? (<button className="Disliked" onClick={DislikeButton}><AiFillDislike />Disliked!</button>
      ):('')}
-     {!user ?( <div><hr></hr><p className ="">To Like and Comment please log in</p></div>
+     {!user ?( <div><hr></hr><p className ="notLoggedIn">To Like and Comment please log in</p></div>
      ):('')}
      </div>
      </div>

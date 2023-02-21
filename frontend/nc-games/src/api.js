@@ -84,6 +84,18 @@ export const editReview = (inc_votes, id) => {
     })
 }
 
+export const commentVote = (inc_votes, comment_id) => {
+    return api.patch(`/comments/${comment_id}`, inc_votes).then((res) => {
+        console.log(res.request['responseURL'], 'no error')
+        console.log(res)
+        return res.data;
+    })
+    .then((err)=> {
+        console.log(err, 'error')
+        return err;
+    })
+}
+
 export const getAllComments = () => {
     return api.get(`/comments`).then((res) => {
         return res.data

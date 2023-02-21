@@ -1,10 +1,11 @@
 import * as React from 'react';
-import {useContext, useState, useEffect} from "react";
+import {useContext, useState, useEffect, useCallback} from "react";
 import { UserContext } from './UserContext';   
 import {ImBin} from "react-icons/im";
-import {AiOutlineEnter} from "react-icons/ai";
+import {AiOutlineEnter, AiFillLike, AiFillDislike} from "react-icons/ai";
+import { BiDislike, BiLike } from "react-icons/bi";
 import { CiFaceMeh } from "react-icons/ci";
-import { getComments, getAllComments, postComment, removeComment } from "../api";
+import { getComments, getAllComments, postComment, removeComment, commentVote } from "../api";
 import {useNavigate, useParams} from "react-router-dom";
 
 const currentUrl = new URL(window.location.href);
@@ -19,12 +20,16 @@ const currentUrl = new URL(window.location.href);
     const [err, setErr] = useState(null)                  //for displaying errors
     const { user } = useContext(UserContext);          //loads a user as context, the user is set in App.js
     const [allComments, setAllComments] = useState();
+    const [Like, setLike] = useState()
+    const [Dislike, setDislike] = useState()
     
     const comment = { //must only have user inputted variables
       username: user,
       body: newComment
     };
    
+   
+
     const navigate = useNavigate(); 
 
     useEffect(()=>{ //gets and post comments
@@ -44,7 +49,6 @@ getAllComments().then((res) => {
   console.log(err)
   setErr(err)
 })
-
 if(posting){ 
       postComment(review_id, comment)
       .then((res)=> {
@@ -87,6 +91,71 @@ if(posting){
         })
       }
 
+    const LikeButton = useCallback((event, comment_id) => {
+      event.preventDefault();
+      if(Like === undefined){
+          setLike(true)
+      }
+      if(Like !== true){ //this happens when Like is false before the button is pressed
+      
+      commentVote({inc_votes: 1}, comment_id)
+      .then((res)=>{
+      console.log('liked', Like, res)
+      getComments(review_id)
+      .then((data)=>{
+          console.log(Like, data, 'liked')
+      setComments(data.comment)
+      setLike(!Like)
+      })
+      })
+  }
+     else if(Like === true){
+          commentVote({inc_votes: -1}, comment_id)
+          .then((res)=>{
+           console.log(res, Like)
+           getComments(review_id)
+           .then((data)=>{
+               console.log(Like, data, 'unliked')
+           setComments(data.comment)
+           setLike(!Like)
+           })
+          })
+      }
+    
+  }, [Like])
+
+  const DislikeButton = useCallback((event, comment_id) => {
+    event.preventDefault();
+    if(Dislike === undefined){
+        setLike(true)
+    }
+    if(Dislike !== true){ //this happens when Like is false before the button is pressed
+    commentVote({inc_votes: -1}, comment_id)
+    .then((res)=>{
+    console.log('disliked', Like, res)
+    getComments(review_id)
+    .then((data)=>{
+        console.log(Dislike, data, 'disliked')
+    setComments(data.comment)
+    setDislike(!Dislike)
+    })
+    })
+}
+   else if(Dislike === true){
+        commentVote({inc_votes: 1}, comment_id)
+        .then((res)=>{
+         console.log(res, Dislike)
+         getComments(review_id)
+         .then((data)=>{
+             console.log(Dislike, data, 'dislike removed')
+         setComments(data.comment)
+         setDislike(!Dislike)
+         })
+        })
+    }
+  
+}, [Dislike])
+
 if(loading) return <h2>loading page... press F5/refresh after 10 seconds if this persists</h2>
 else if (posting) return <h2>posting... press F5/refresh after 10 seconds if this persists{comment.comment_id}</h2>
 else if (deleting) return <h2>deleting... press F5/refresh after 10 seconds if this persists{comment.comment_id}</h2>
@@ -122,6 +191,7 @@ return <ul>
        {newComment === '' ? (<p className="commentValidation">please enter a comment before posting</p>):(<button type="submit" disabled={!user} className="submitButton" onClick={(event) => setPosting(true)}><AiOutlineEnter /></button>)} 
       </form>
 {comments.map((comment) => {
+  console.log(comment.comment_id)
 return <li className="comments" key={comment['comment_id']}> 
 <div className = "comment">
 <br></br>
@@ -130,13 +200,21 @@ return <li className="comments" key={comment['comment_id']}>
 <p className="comment-body">Body:</p>{comment.body}
 <br></br>
 <p className="commentVotes">Votes:</p>{comment.votes}
+<div>{user && !Dislike && !Like? (<button className="Like" onClick={(event) => {event.preventDefault(); LikeButton(event, comment['comment_id'])}}><BiLike /></button>
+     ):('')}
+     {user && Like && !Dislike? (<button className="Liked" onClick={(event) => {event.preventDefault(); LikeButton(event, comment['comment_id'])}}><AiFillLike />Liked!</button>
+     ):('')}
+          {user && !Like && !Dislike? (<button className="Dislike" onClick={(event) => {event.preventDefault(); DislikeButton(event, comment['comment_id'])}}><BiDislike /></button>
+     ):('')}
+     {user && Dislike && !Like? (<button className="Disliked" onClick={(event) => {event.preventDefault(); DislikeButton(event, comment['comment_id'])}}><AiFillDislike />Disliked!</button>
+     ):('')}
+     </div>
 <br></br>
 <p className="comment-created-at">Made:</p>{new Date(comment.created_at).toString()}
 <br></br>
 {comment.author===user ? ( //if we own the comment
 <button disabled={deleting} //you can only click to set deleting once
-onClick={(event) => 
-DeletePost(event, comment.comment_id)}><ImBin /></button>): ( //if the user matches, this button appears and the user can delete its comment
+onClick={(event) => DeletePost(event, comment.comment_id)}><ImBin /></button>): ( //if the user matches, this button appears and the user can delete its comment
             '' //otherwise it shows nothing
           )}
 </div>
