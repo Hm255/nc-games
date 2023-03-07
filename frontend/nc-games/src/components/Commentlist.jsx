@@ -7,7 +7,9 @@ import { BiDislike, BiLike } from "react-icons/bi";
 import { CiFaceMeh } from "react-icons/ci";
 import { getComments, getAllComments, postComment, removeComment, commentVote } from "../api";
 import {useNavigate, useParams} from "react-router-dom";
-
+import {ReactDOM, createRoot} from 'react-dom';
+import Comment from "./Comment"
+//import Comment from './Comment';
 const currentUrl = new URL(window.location.href);
 
     const Commentlist = ()=>{
@@ -23,21 +25,21 @@ const currentUrl = new URL(window.location.href);
     const [Like, setLike] = useState()
     const [Dislike, setDislike] = useState()
     
+  
+
     const comment = { //must only have user inputted variables
       username: user,
       body: newComment
     };
    
-   
-
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
 
     useEffect(()=>{ //gets and post comments
         getComments(review_id)
         .then((data) => {
           if(data){
             setComments(data.comment);
-            console.table(data.comment); 
+            console.table(data.comment);
             navigate(currentUrl.search);
             setLoading(false);
           }
@@ -49,7 +51,7 @@ getAllComments().then((res) => {
   console.log(err)
   setErr(err)
 })
-if(posting){ 
+if(posting){
       postComment(review_id, comment)
       .then((res)=> {
         console.log(res)
@@ -68,93 +70,52 @@ if(posting){
         }
     }, [review_id, posting]);
 
-    const handleCommentChange = (event) => { //sets the value of whats in the comment body to what's typed into the box
-        setNewComment(event.target.value);
-      };
+      let userComments = comments.map((item, index, array) => {
+        return <Comment
+          key={item.comment_id}
+          author={item.author}
+          comment_id={item.comment_id}
+          body={item.body}
+          review_id={item.review_id}
+          votes={item.votes}
+          created_at={item.created_at}
+        />;
+      //   return <Comment
+      //   author={comment.author}
+      //   comment_id={comment.comment_id}
+      //   body={comment.body}
+      //   review_id={comment.review_id}
+      //   votes={comment.votes}
+      //   created_at={comment.created_at}
+      //   liked={comment.liked}
+      //   disliked={comment.disliked}
+      // />
+      });
+console.log(userComments)
 
-    const DeletePost = (event, comment_id) => { //button for deleting posts
-      event.preventDefault();
-      setDeleting(true)
-      removeComment(comment_id)
-      .then((res)=> {
-        console.log("deleted", res)
-        getComments(review_id)
-        .then((data)=> {
-          setComments(data.comment)
-        })
-        setDeleting(false)
-      })
-        .catch((err) => {console.log(err)
-          setErr(err)
-          setDeleting(false)
-          return <h2>invalid request</h2>
-        })
-      }
+const handleCommentChange = (event) => { //sets the value of whats in the comment body to what's typed into the box
+  setNewComment(event.target.value);
+};
 
-    const LikeButton = useCallback((event, comment_id) => {
-      event.preventDefault();
-      if(Like === undefined){
-          setLike(true)
-      }
-      if(Like !== true){ //this happens when Like is false before the button is pressed
-      
-      commentVote({inc_votes: 1}, comment_id)
-      .then((res)=>{
-      console.log('liked', Like, res)
-      getComments(review_id)
-      .then((data)=>{
-          console.log(Like, data, 'liked')
-      setComments(data.comment)
-      setLike(!Like)
-      })
-      })
-  }
-     else if(Like === true){
-          commentVote({inc_votes: -1}, comment_id)
-          .then((res)=>{
-           console.log(res, Like)
-           getComments(review_id)
-           .then((data)=>{
-               console.log(Like, data, 'unliked')
-           setComments(data.comment)
-           setLike(!Like)
-           })
-          })
-      }
-    
-  }, [Like])
-
-  const DislikeButton = useCallback((event, comment_id) => {
-    event.preventDefault();
-    if(Dislike === undefined){
-        setLike(true)
-    }
-    if(Dislike !== true){ //this happens when Like is false before the button is pressed
-    commentVote({inc_votes: -1}, comment_id)
-    .then((res)=>{
-    console.log('disliked', Like, res)
-    getComments(review_id)
-    .then((data)=>{
-        console.log(Dislike, data, 'disliked')
+const DeletePost = (event, comment_id) => { //button for deleting posts
+event.preventDefault();
+setDeleting(true)
+removeComment(comment_id)
+.then((res)=> {
+  console.log("deleted", res)
+  getComments(review_id)
+  .then((data)=> {
     setComments(data.comment)
-    setDislike(!Dislike)
-    })
-    })
+  })
+  setDeleting(false)
+})
+  .catch((err) => {console.log(err)
+    setErr(err)
+    setDeleting(false)
+    return <h2>invalid request</h2>
+  })
 }
-   else if(Dislike === true){
-        commentVote({inc_votes: 1}, comment_id)
-        .then((res)=>{
-         console.log(res, Dislike)
-         getComments(review_id)
-         .then((data)=>{
-             console.log(Dislike, data, 'dislike removed')
-         setComments(data.comment)
-         setDislike(!Dislike)
-         })
-        })
-    }
-  
-}, [Dislike])
+
 
 if(loading) return <h2>loading page... press F5/refresh after 10 seconds if this persists</h2>
 else if (posting) return <h2>posting... press F5/refresh after 10 seconds if this persists{comment.comment_id}</h2>
@@ -178,6 +139,7 @@ return <ul>
 }
 else {
 return <ul>
+  
   <form>
         <input
           type="text"
@@ -190,38 +152,46 @@ return <ul>
         </br>
        {newComment === '' ? (<p className="commentValidation">please enter a comment before posting</p>):(<button type="submit" disabled={!user} className="submitButton" onClick={(event) => setPosting(true)}><AiOutlineEnter /></button>)} 
       </form>
-{comments.map((comment) => {
-  console.log(comment.comment_id)
-return <li className="comments" key={comment['comment_id']}> 
+{userComments.map((comment) => {
+return <li className="comments" key={comment.props['comment_id']}> 
 <div className = "comment">
 <br></br>
-<p className="Author" required={true} >Author:</p>{comment.author}
+<p className="Author" required={true} >Author:</p>{comment.props.author}
 <br></br>
-<p className="comment-body">Body:</p>{comment.body}
+<p className="comment-body">Body:</p>{comment.props.body}
 <br></br>
-<p className="commentVotes">Votes:</p>{comment.votes}
-<div>{user && !Dislike && !Like? (<button className="Like" onClick={(event) => {event.preventDefault(); LikeButton(event, comment['comment_id'])}}><BiLike /></button>
-     ):('')}
-     {user && Like && !Dislike? (<button className="Liked" onClick={(event) => {event.preventDefault(); LikeButton(event, comment['comment_id'])}}><AiFillLike />Liked!</button>
-     ):('')}
-          {user && !Like && !Dislike? (<button className="Dislike" onClick={(event) => {event.preventDefault(); DislikeButton(event, comment['comment_id'])}}><BiDislike /></button>
-     ):('')}
-     {user && Dislike && !Like? (<button className="Disliked" onClick={(event) => {event.preventDefault(); DislikeButton(event, comment['comment_id'])}}><AiFillDislike />Disliked!</button>
-     ):('')}
+<p className="commentVotes">Votes:</p>{comment.props.votes}
+<div className="LikeAndDislikeButtons">
+  {/* {user && !Dislike && !Like? (<button className="Like" id={comment['comment_id']} onClick={(event) => {event.preventDefault(); }}><BiLike /></button>):('')}
+  {user && Like && !Dislike? (<button className="Liked" id={comment['comment_id']} onClick={(event) => {event.preventDefault(); }}><AiFillLike />Liked!</button>):('')}
+  {user && !Like && !Dislike? (<button className="Dislike" id={comment['comment_id']} onClick={(event) => {event.preventDefault(); }}><BiDislike /></button>):('')}
+  {user && Dislike && !Like? (<button className="Disliked" id={comment['comment_id']} onClick={(event) => {event.preventDefault(); }}><AiFillDislike />Disliked!</button>):('')} */}
+  <Comment 
+  key={comment.props['comment_id']}
+  author={comment.props['author']}
+  comment_id={comment.props['comment_id']}
+  body={comment.props['body']}
+  review_id={comment.props['review_id']}
+  votes={comment.props['votes']}
+  created_at={comment.props['created_at']}
+  />
      </div>
 <br></br>
-<p className="comment-created-at">Made:</p>{new Date(comment.created_at).toString()}
+<p className="comment-created-at">Made:</p>{new Date(comment.props.created_at).toString()}
 <br></br>
-{comment.author===user ? ( //if we own the comment
-<button disabled={deleting} //you can only click to set deleting once
-onClick={(event) => DeletePost(event, comment.comment_id)}><ImBin /></button>): ( //if the user matches, this button appears and the user can delete its comment
-            '' //otherwise it shows nothing
+{comment.props.author===user ? (
+<button disabled={deleting}
+onClick={(event) => DeletePost(event, comment.comment_id)}><ImBin /></button>): ( 
+            '' 
           )}
 </div>
-</li> 
+{console.log(comment.key, comment.props)}
+</li>
 })
 }
 </ul>
 }
 }
 export default Commentlist
+//set comment.liked/disliked to true or false
+//how would I correctly refer to props to get my state prop values from userComments returned to my page?

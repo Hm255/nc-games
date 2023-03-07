@@ -50,7 +50,6 @@ setLoading(false)
 
         const LikeButton = useCallback((event) => {
             if(Like === undefined){
-               
                 setLike(true)
             }
             if(Like !== true){ //this happens when Like is false before the button is pressed
