@@ -28,12 +28,20 @@ class Comment extends React.Component {
         liked: !state.liked,
         disliked: false
       }));
-      const inc_votes = this.state.liked ? {inc_votes: -1} : {inc_votes: +1};
-      commentVote(inc_votes, this.state.comment_id).then((res) => {
-         console.log(res)
+      if(this.state.disliked){
+        inc_votes = this.state.liked ? {inc_votes: -1} : {inc_votes: +1};
+        commentVote(inc_votes, this.state.comment_id).then((res) => {
+         console.log(res.comment)
          return res.data;
      })
-     console.log(this.state)
+        console.log('dislike to like')
+     }
+      let inc_votes = this.state.liked ? {inc_votes: -1} : {inc_votes: +1};
+      commentVote(inc_votes, this.state.comment_id).then((res) => {
+         console.log(res.comment)
+         return res.data;
+     })
+     console.log(this.state.liked)
     }
 
    toggleDislike = () => {
@@ -41,13 +49,22 @@ class Comment extends React.Component {
         liked: false,
         disliked: !state.disliked
       }));
-      const inc_votes = this.state.disliked ? {inc_votes: +1} : {inc_votes: -1};
+      if(this.state.liked){
+         inc_votes = this.state.disliked ? {inc_votes: +1} : {inc_votes: -1};
+         commentVote(inc_votes, this.state.comment_id).then((res) => {
+          console.log(res.comment)
+          return res.data;
+      })
+         console.log('like to dislike')
+      }
+      let inc_votes = this.state.disliked ? {inc_votes: +1} : {inc_votes: -1};
       commentVote(inc_votes, this.state.comment_id).then((res) => {
-         console.log(res)
+         console.log(res.comment)
          return res.data;
      })
-     console.log(this.state)
+     console.log(this.state.disliked)
     }
+
    render() {
       const { user } = this.context;
      if(user){ 
@@ -63,4 +80,4 @@ class Comment extends React.Component {
    }
  }
  export default Comment
-//comment constructor initialized here but the like/dislike buttons alter an undefined Comment instance unrelated to any comment
+//live rendering needed

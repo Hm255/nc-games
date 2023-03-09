@@ -5,7 +5,7 @@ import {ImBin} from "react-icons/im";
 import {AiOutlineEnter, AiFillLike, AiFillDislike} from "react-icons/ai";
 import { BiDislike, BiLike } from "react-icons/bi";
 import { CiFaceMeh } from "react-icons/ci";
-import { getComments, getAllComments, postComment, removeComment, commentVote } from "../api";
+import { getComments, getAllComments, postComment, removeComment } from "../api";
 import {useNavigate, useParams} from "react-router-dom";
 import {ReactDOM, createRoot} from 'react-dom';
 import Comment from "./Comment"
@@ -80,16 +80,6 @@ if(posting){
           votes={item.votes}
           created_at={item.created_at}
         />;
-      //   return <Comment
-      //   author={comment.author}
-      //   comment_id={comment.comment_id}
-      //   body={comment.body}
-      //   review_id={comment.review_id}
-      //   votes={comment.votes}
-      //   created_at={comment.created_at}
-      //   liked={comment.liked}
-      //   disliked={comment.disliked}
-      // />
       });
 console.log(userComments)
 
@@ -193,5 +183,3 @@ onClick={(event) => DeletePost(event, comment.comment_id)}><ImBin /></button>): 
 }
 }
 export default Commentlist
-//set comment.liked/disliked to true or false
-//how would I correctly refer to props to get my state prop values from userComments returned to my page?
