@@ -77,6 +77,7 @@ if(posting){
           review_id={item.review_id}
           votes={item.votes}
           created_at={item.created_at}
+          onUpdate={handleCommentUpdate}
         />;
       });
 console.log(userComments)
@@ -105,7 +106,11 @@ removeComment(comment_id)
 }
 
 const handleCommentUpdate = (updatedComment) => {
-  setComments(updatedComment)
+  setComments((prevComments) =>
+    prevComments.map((comment) =>
+      comment.comment_id === updatedComment.comment_id ? updatedComment : comment
+    )
+  );
 };
 
 if(loading) return <h2>loading page... press F5/refresh after 10 seconds if this persists</h2>

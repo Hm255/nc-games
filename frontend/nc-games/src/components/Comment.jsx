@@ -3,7 +3,7 @@ import { commentVote, editReview, getComment, getComments } from '../api';
 import {useState, useEffect, useCallback} from "react";
 import {useParams} from "react-router-dom";
 const Comment = (props) => {
-  const {review_id} = useParams()                    
+  const {review_id} = useParams()                
   const [state, setState] = useState({
     author: props.author,
     comment_id: props.comment_id,
@@ -14,13 +14,6 @@ const Comment = (props) => {
     liked: props.liked,
     disliked: props.disliked,
   });
-  const [comments, setComments] = useState(comments);
-  useEffect(() => {
-   getComments(review_id)
-   .then((data)=> {
-    setComments(data.comment);
-   })
-  }, [state.review_id, state.comment_id, state.liked, state.disliked]);
 
   const toggleLike = useCallback(() => {
     setState((state) => ({
@@ -37,7 +30,8 @@ const Comment = (props) => {
           votes,
         }));
         console.log(res.comment);
-        return res.data;
+        props.onUpdate(res.comment);
+      return res.data;
       });
     }
     const inc_votes = state.liked ? { inc_votes: -1 } : { inc_votes: +1 };
@@ -48,10 +42,12 @@ const Comment = (props) => {
         votes,
       }));
       console.log(res.comment);
+      props.onUpdate(res.comment);
       return res.data;
     });
     console.log(state.liked);
   }, [state.liked, state.disliked])
+
 
   const toggleDislike = useCallback(() => {
     setState((state) => ({
@@ -68,7 +64,8 @@ const Comment = (props) => {
           votes,
         }));
         console.log(res.comment);
-        return res.data;
+        props.onUpdate(res.comment);
+      return res.data;
       });
     }
     const inc_votes = state.disliked ? { inc_votes: +1 } : { inc_votes: -1 };
@@ -79,6 +76,7 @@ const Comment = (props) => {
         votes,
       }));
       console.log(res.comment);
+      props.onUpdate(res.comment);
       return res.data;
     });
   }, [state.liked, state.disliked])
