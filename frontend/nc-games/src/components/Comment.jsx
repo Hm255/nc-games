@@ -1,83 +1,92 @@
 import * as React from "react";
-import { commentVote, editReview } from '../api';
-import {useContext, useState, useEffect, useCallback} from "react";
-import { UserContext } from './UserContext';   
+import { commentVote, editReview, getComment, getComments } from '../api';
+import {useState, useEffect, useCallback} from "react";
+import {useParams} from "react-router-dom";
+const Comment = (props) => {
+  const {review_id} = useParams()                    
+  const [state, setState] = useState({
+    author: props.author,
+    comment_id: props.comment_id,
+    body: props.body,
+    review_id: props.review_id,
+    votes: props.votes,
+    created_at: props.created_at,
+    liked: props.liked,
+    disliked: props.disliked,
+  });
+  const [comments, setComments] = useState(comments);
+  useEffect(() => {
+   getComments(review_id)
+   .then((data)=> {
+    setComments(data.comment);
+   })
+  }, [state.review_id, state.comment_id, state.liked, state.disliked]);
 
-
-class Comment extends React.Component {
-  static contextType = UserContext;
-   constructor(props) {
-     super(props);
-     this.state = {
-       author: props.author,
-       comment_id: props.comment_id,
-       body: props.body,
-       review_id: props.review_id,
-       votes: props.votes,
-       created_at: props.created_at,
-       liked: props.liked,
-       disliked: props.disliked,
-     };
-     
-     this.toggleLike = this.toggleLike.bind(this);
-     this.toggleDislike = this.toggleDislike.bind(this);
-     console.log(this, this._reactInternals)
-   }
-   toggleLike = () => {
-      this.setState((state) => ({
-        liked: !state.liked,
-        disliked: false
-      }));
-      if(this.state.disliked){
-        inc_votes = this.state.liked ? {inc_votes: -1} : {inc_votes: +1};
-        commentVote(inc_votes, this.state.comment_id).then((res) => {
-         console.log(res.comment)
-         return res.data;
-     })
-        console.log('dislike to like')
-     }
-      let inc_votes = this.state.liked ? {inc_votes: -1} : {inc_votes: +1};
-      commentVote(inc_votes, this.state.comment_id).then((res) => {
-         console.log(res.comment)
-         return res.data;
-     })
-     console.log(this.state.liked)
+  const toggleLike = useCallback(() => {
+    setState((state) => ({
+      ...state,
+      liked: !state.liked,
+      disliked: false,
+    }));
+    if (state.disliked) {
+      const inc_votes = state.liked ? { inc_votes: -1 } : { inc_votes: +1 };
+      commentVote(inc_votes, state.comment_id).then((res) => {
+        const { votes } = res.comment.votes;
+        setState((state) => ({
+          ...state,
+          votes,
+        }));
+        console.log(res.comment);
+        return res.data;
+      });
     }
-
-   toggleDislike = () => {
-      this.setState((state) => ({
-        liked: false,
-        disliked: !state.disliked
+    const inc_votes = state.liked ? { inc_votes: -1 } : { inc_votes: +1 };
+    commentVote(inc_votes, state.comment_id).then((res) => {
+      const { votes } = res.comment.votes;
+      setState((state) => ({
+        ...state,
+        votes,
       }));
-      if(this.state.liked){
-         inc_votes = this.state.disliked ? {inc_votes: +1} : {inc_votes: -1};
-         commentVote(inc_votes, this.state.comment_id).then((res) => {
-          console.log(res.comment)
-          return res.data;
-      })
-         console.log('like to dislike')
-      }
-      let inc_votes = this.state.disliked ? {inc_votes: +1} : {inc_votes: -1};
-      commentVote(inc_votes, this.state.comment_id).then((res) => {
-         console.log(res.comment)
-         return res.data;
-     })
-     console.log(this.state.disliked)
-    }
+      console.log(res.comment);
+      return res.data;
+    });
+    console.log(state.liked);
+  }, [state.liked, state.disliked])
 
-   render() {
-      const { user } = this.context;
-     if(user){ 
-     return (
-       <div>
-         <p>{this.state.body}</p>
-         <button onClick={() => this.toggleLike()}>Like</button>
-         <button onClick={() => this.toggleDislike()}>Dislike</button>
-         <p>{`Liked: ${this.state.liked}, Disliked: ${this.state.disliked}`}</p>
-       </div>
-     );
-   }
-   }
- }
+  const toggleDislike = useCallback(() => {
+    setState((state) => ({
+      ...state,
+      liked: false,
+      disliked: !state.disliked,
+    }));
+    if (state.liked) {
+      const inc_votes = state.disliked ? { inc_votes: +1 } : { inc_votes: -1 };
+      commentVote(inc_votes, state.comment_id).then((res) => {
+        const { votes } = res.comment.votes;
+        setState((state) => ({
+          ...state,
+          votes,
+        }));
+        console.log(res.comment);
+        return res.data;
+      });
+    }
+    const inc_votes = state.disliked ? { inc_votes: +1 } : { inc_votes: -1 };
+    commentVote(inc_votes, state.comment_id).then((res) => {
+      const { votes } = res.comment.votes;
+      setState((state) => ({
+        ...state,
+        votes,
+      }));
+      console.log(res.comment);
+      return res.data;
+    });
+  }, [state.liked, state.disliked])
+
+  return <ul>
+    <button onClick={toggleLike}>Like</button>
+    <button onClick={toggleDislike}>Dislike</button>
+  </ul>
+};
  export default Comment
 //live rendering needed

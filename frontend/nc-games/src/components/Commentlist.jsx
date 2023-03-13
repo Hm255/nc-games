@@ -25,8 +25,6 @@ const currentUrl = new URL(window.location.href);
     const [Like, setLike] = useState()
     const [Dislike, setDislike] = useState()
     
-  
-
     const comment = { //must only have user inputted variables
       username: user,
       body: newComment
@@ -106,6 +104,9 @@ removeComment(comment_id)
   })
 }
 
+const handleCommentUpdate = (updatedComment) => {
+  setComments(updatedComment)
+};
 
 if(loading) return <h2>loading page... press F5/refresh after 10 seconds if this persists</h2>
 else if (posting) return <h2>posting... press F5/refresh after 10 seconds if this persists{comment.comment_id}</h2>
@@ -129,7 +130,6 @@ return <ul>
 }
 else {
 return <ul>
-  
   <form>
         <input
           type="text"
@@ -143,7 +143,7 @@ return <ul>
        {newComment === '' ? (<p className="commentValidation">please enter a comment before posting</p>):(<button type="submit" disabled={!user} className="submitButton" onClick={(event) => setPosting(true)}><AiOutlineEnter /></button>)} 
       </form>
 {userComments.map((comment) => {
-return <li className="comments" key={comment.props['comment_id']}> 
+return <li className="comments" key={comment.props['comment_id']}>
 <div className = "comment">
 <br></br>
 <p className="Author" required={true} >Author:</p>{comment.props.author}
@@ -152,11 +152,7 @@ return <li className="comments" key={comment.props['comment_id']}>
 <br></br>
 <p className="commentVotes">Votes:</p>{comment.props.votes}
 <div className="LikeAndDislikeButtons">
-  {/* {user && !Dislike && !Like? (<button className="Like" id={comment['comment_id']} onClick={(event) => {event.preventDefault(); }}><BiLike /></button>):('')}
-  {user && Like && !Dislike? (<button className="Liked" id={comment['comment_id']} onClick={(event) => {event.preventDefault(); }}><AiFillLike />Liked!</button>):('')}
-  {user && !Like && !Dislike? (<button className="Dislike" id={comment['comment_id']} onClick={(event) => {event.preventDefault(); }}><BiDislike /></button>):('')}
-  {user && Dislike && !Like? (<button className="Disliked" id={comment['comment_id']} onClick={(event) => {event.preventDefault(); }}><AiFillDislike />Disliked!</button>):('')} */}
-  <Comment 
+{user ? ( <Comment
   key={comment.props['comment_id']}
   author={comment.props['author']}
   comment_id={comment.props['comment_id']}
@@ -164,15 +160,16 @@ return <li className="comments" key={comment.props['comment_id']}>
   review_id={comment.props['review_id']}
   votes={comment.props['votes']}
   created_at={comment.props['created_at']}
-  />
-     </div>
+  onUpdate={handleCommentUpdate}
+  />):('')}
+</div>
 <br></br>
 <p className="comment-created-at">Made:</p>{new Date(comment.props.created_at).toString()}
 <br></br>
 {comment.props.author===user ? (
 <button disabled={deleting}
 onClick={(event) => DeletePost(event, comment.comment_id)}><ImBin /></button>): ( 
-            '' 
+            ''
           )}
 </div>
 {console.log(comment.key, comment.props)}
