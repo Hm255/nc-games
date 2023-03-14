@@ -1,13 +1,12 @@
 import React, { useEffect, useState, useContext, useCallback } from "react";
 import { getReview, editReview } from "../api";
-import { useParams, useSearchParams, Link, useNavigate} from "react-router-dom";
+import { useParams, Link} from "react-router-dom";
 import {AiFillCaretLeft, AiFillFastBackward, AiOutlineUserSwitch, AiFillLike, AiFillDislike} from "react-icons/ai";
 import ErrorPage from "./ErrorPage";
 import { BiDislike, BiLike } from "react-icons/bi";
 import { UserContext } from "./UserContext";
 import Commentlist from "./Commentlist" //this is empty before singleReview fully renders
-import { LikeContext } from "./LikeContext";
-import { DislikeContext } from "./DislikeContext";
+
 
 export default function SingleReview(props) {
     const {review_id} = useParams()
@@ -17,12 +16,11 @@ export default function SingleReview(props) {
     const { user } = useContext(UserContext);
     const [errFix, setErrFix] = useState (null)
     const [loading, setLoading] = useState(true);
-    const [votes, setVotes] = useState(review.votes)
     const [Like, setLike] = useState()
     const [Dislike, setDislike] = useState()
 
 
-    const navigate = useNavigate()
+   
     useEffect(()=>{ 
         getReview(review_id)
         .then((reviewFromApi) => {//for error handling, take the return obj and check if it is ok, if not then it will return its given errors defined in the frontend api

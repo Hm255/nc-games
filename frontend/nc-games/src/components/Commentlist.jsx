@@ -1,13 +1,11 @@
 import * as React from 'react';
-import {useContext, useState, useEffect, useCallback} from "react";
+import {useContext, useState, useEffect} from "react";
 import { UserContext } from './UserContext';   
 import {ImBin} from "react-icons/im";
-import {AiOutlineEnter, AiFillLike, AiFillDislike} from "react-icons/ai";
-import { BiDislike, BiLike } from "react-icons/bi";
+import {AiOutlineEnter} from "react-icons/ai";
 import { CiFaceMeh } from "react-icons/ci";
 import { getComments, getAllComments, postComment, removeComment } from "../api";
 import {useNavigate, useParams} from "react-router-dom";
-import {ReactDOM, createRoot} from 'react-dom';
 import Comment from "./Comment"
 //import Comment from './Comment';
 const currentUrl = new URL(window.location.href);
@@ -22,8 +20,6 @@ const currentUrl = new URL(window.location.href);
     const [err, setErr] = useState(null)                  //for displaying errors
     const { user } = useContext(UserContext);          //loads a user as context, the user is set in App.js
     const [allComments, setAllComments] = useState();
-    const [Like, setLike] = useState()
-    const [Dislike, setDislike] = useState()
     
     const comment = { //must only have user inputted variables
       username: user,
@@ -156,7 +152,6 @@ return <li className="comments" key={comment.props['comment_id']}>
 <p className="comment-body">Body:</p>{comment.props.body}
 <br></br>
 <p className="commentVotes">Votes:</p>{comment.props.votes}
-<div className="LikeAndDislikeButtons">
 {user ? ( <Comment
   key={comment.props['comment_id']}
   author={comment.props['author']}
@@ -167,7 +162,6 @@ return <li className="comments" key={comment.props['comment_id']}>
   created_at={comment.props['created_at']}
   onUpdate={handleCommentUpdate}
   />):('')}
-</div>
 <br></br>
 <p className="comment-created-at">Made:</p>{new Date(comment.props.created_at).toString()}
 <br></br>

@@ -1,9 +1,9 @@
 import * as React from "react";
-import { commentVote, editReview, getComment, getComments } from '../api';
-import {useState, useEffect, useCallback} from "react";
-import {useParams} from "react-router-dom";
+import { commentVote } from '../api';
+import {useState, useCallback} from "react";
+import { AiFillLike, AiFillDislike } from "react-icons/ai";
+
 const Comment = (props) => {
-  const {review_id} = useParams()                
   const [state, setState] = useState({
     author: props.author,
     comment_id: props.comment_id,
@@ -82,8 +82,10 @@ const Comment = (props) => {
   }, [state.liked, state.disliked])
 
   return <ul>
-    <button onClick={toggleLike}>Like</button>
-    <button onClick={toggleDislike}>Dislike</button>
+    {!state.liked && !state.disliked ?<button className="commentLike" onClick={toggleLike}>Like</button>:('')}
+    {state.liked && !state.disliked ? <button className="commentLiked" onClick={toggleLike}><AiFillLike /></button>:('')}
+    {!state.liked && !state.disliked ?<button className="commentDislike" onClick={toggleDislike}>Dislike</button>:('')}
+    {!state.liked && state.disliked ? <button className="commentDisliked" onClick={toggleDislike}><AiFillDislike /></button>:('')}
   </ul>
 };
  export default Comment

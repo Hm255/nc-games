@@ -1,6 +1,5 @@
 import React from 'react';
-import { useContext } from 'react';
-import { CategoryContext } from './CategoryContext';
+
 
 const CategorySort = ({ onChange }) => {
   

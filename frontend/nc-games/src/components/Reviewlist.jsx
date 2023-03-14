@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useState, useEffect, useContext} from "react";
 import { getReviews } from "../api";
-import {Link, useNavigate, useParams, useSearchParams, useLocation} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import Sortby from './Sortby';
 import Orderby from './Orderby';
 import CategorySort from './CategorySort';

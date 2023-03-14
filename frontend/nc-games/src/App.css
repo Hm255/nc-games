@@ -164,6 +164,26 @@ list-style-type: none;
 .commentBox{
   margin-right: 3%;
 }
+.commentLike{
+display: inline-block;
+margin-left: 10px;
+}
+.commentLiked{
+  display: inline-block;
+  margin-left: 10px;
+}
+.commentDislike{
+display: inline-block;
+margin-right: 10px;
+}
+.commentDisliked{
+  display: inline-block;
+  margin-right: 10px;
+}
+.LikeAndDislikebuttons{
+  display: inline-block;
+  margin-left: 50px;
+}
 .submitButton{
   margin-right: 3%;
 }
