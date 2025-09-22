@@ -1,7 +1,7 @@
 import axios from "axios";
 import React from "react";
 const api = axios.create({
-  baseURL: "https://nc-game.cyclic.app/api", //source database url
+  baseURL: "http://localhost:9090/api", //source database url
 });
 
 export const getReviews = (sortBy, orderBy, Category) => {
