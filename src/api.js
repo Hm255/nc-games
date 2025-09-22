@@ -1,7 +1,7 @@
 import axios from "axios";
 import React from "react";
 const api = axios.create({
-  baseURL: "http://localhost:9090/api", //source database url
+  baseURL: "https://backend-host-nc-games.onrender.com/", //source database url
 });
 
 export const getReviews = (sortBy, orderBy, Category) => {
