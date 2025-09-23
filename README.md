@@ -28,7 +28,7 @@ my current pkg.json dependencies
 earliest node version compatibility: v18.12.1
 ## Endpoints/routes 
 
-## hosted backend: https://nc-game.cyclic.app/api
+## hosted backend: https://my-only-nc-games.netlify.app
 ## Backend github repository: https://github.com/Hm255/Backend-Host
 
 ### /reviews: 
